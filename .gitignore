@@ -1,0 +1,8 @@
+hardik.py
+
+*.log
+*.exe
+*.out
+*.com
+
+__pycache__
