@@ -10,18 +10,18 @@ struct Customer {
     char address[100];
 };
 
+void displayCustomerInfo(struct Customer customer) {
+    printf("\nName: %s\n", customer.name);
+    printf("Age: %d\n", customer.age);
+    printf("Address: %s\n", customer.address);
+}
+
 typedef struct {
     int roomNumber;
     bool isReserved;
 } Room;
 
 Room rooms[MAX_ROOMS];
-
-void displayCustomerInfo(struct Customer customer) {
-    printf("\nName: %s\n", customer.name);
-    printf("Age: %d\n", customer.age);
-    printf("Address: %s\n", customer.address);
-}
 
 void initializeRooms() {
     for (int i = 0; i < MAX_ROOMS; i++) {
