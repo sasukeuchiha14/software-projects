@@ -45,14 +45,16 @@ bool reserveRoom(int roomNumber) {
         return false;
     }
 
-    if (rooms[roomNumber - 1].isReserved) {
+    else if (rooms[roomNumber - 1].isReserved) {
         printf("Room %d is already reserved!\n", roomNumber);
         return false;
     }
 
-    rooms[roomNumber - 1].isReserved = true;
-    printf("Room %d reserved successfully!\n", roomNumber);
-    return true;
+    else {
+        rooms[roomNumber - 1].isReserved = true;
+        printf("Room %d reserved successfully!\n", roomNumber);
+        return true;
+    }
 }
 
 bool cancelReservation(int roomNumber) {
@@ -61,14 +63,16 @@ bool cancelReservation(int roomNumber) {
         return false;
     }
 
-    if (!rooms[roomNumber - 1].isReserved) {
+    else if (!rooms[roomNumber - 1].isReserved) {
         printf("Room %d is not reserved!\n", roomNumber);
         return false;
     }
 
-    rooms[roomNumber - 1].isReserved = false;
-    printf("Reservation for room %d cancelled successfully!\n", roomNumber);
-    return true;
+    else {
+        rooms[roomNumber - 1].isReserved = false;
+        printf("Reservation for room %d cancelled successfully!\n", roomNumber);
+        return true;
+    }
 }
 
 int main() {
