@@ -7,12 +7,14 @@
 struct Customer {
     char name[50];
     int age;
+    int number;
     char address[100];
 };
 
 void displayCustomerInfo(struct Customer customer) {
     printf("\nName: %s\n", customer.name);
     printf("Age: %d\n", customer.age);
+    printf("Phone Number: %d\n", customer.number);
     printf("Address: %s\n", customer.address);
 }
 
@@ -91,6 +93,8 @@ int main() {
                 scanf("%s", customer.name);
                 printf("Enter customer age: ");
                 scanf("%d", &customer.age);
+                printf("Enter customer phone number: ");
+                scanf("%d", &customer.number);
                 printf("Enter customer address: ");
                 scanf("%s", customer.address);
                 displayCustomerInfo(customer);
