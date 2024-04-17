@@ -26,7 +26,7 @@ void displayCustomerInfo(struct Customer customer) {
     printf("Age: %d\n", customer.age);
     printf("Phone Number: %lld\n", customer.number);
     printf("Email: %s\n", customer.mail);
-    printf("Address: %s, %s, %s, %s, %d\n", customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
+    printf("Address: %s, %s, %s, %s, %s\n", customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
 }
 
 typedef struct {
@@ -305,7 +305,7 @@ void genBill(int days, int type, struct Bill bill, struct Customer customer) {
     printf("Customer Age       : %d\n", customer.age);
     printf("Customer Phone No  : %lld\n", customer.number);
     printf("Customer Email     : %s\n", customer.mail);
-    printf("Customer Address   : %s, %s, %s, %s, %d\n", customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
+    printf("Customer Address   : %s, %s, %s, %s, %s\n", customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
     printf("Room Type          : "); roomname(type);
     printf("No. of days stayed : %d\n", days);
     printf("Room cost per day  : %d\n", bill.cost_perday);
@@ -314,12 +314,33 @@ void genBill(int days, int type, struct Bill bill, struct Customer customer) {
     printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 }
 
+void take_feedback() {
+    char yn2[5];
+    printf("Would you like to provide feedback? (y/n): ");
+    scanf("%s", yn2);
+    if (strcmp(yn2, "y") == 0) {
+        printf("Please provide your feedback: ");
+        char feedback[100];
+        scanf("%s", feedback);
+        printf("\n");
+        printf("Thank you for your feedback!\n");
+    }
+    else if (strcmp(yn2, "n") == 0) {
+        printf("\n");
+        printf("Thank you for using our service!\n");
+    }
+    else {
+        printf("\n");
+        printf("Invalid choice! Thank you for using our service!\n");
+    }
+}
+
 int main() {
     int choice;
     struct Customer customer;
     initializeRooms();
     int type,roomNumber,days;
-    char yn1[5],yn2[5];
+    char yn[5];
     while (true) {
         printf("\nMenu:\n1. Customer info\n2. Display available rooms\n3. Reserve a room\n4. Cancel Reservation\n5. Generate Bill \n6. Exit\n\nEnter your choice: ");
         scanf("%d", &choice);
@@ -344,7 +365,8 @@ int main() {
                 printf("\tState: ");
                 scanf("%s", customer.address.state);
                 printf("\tPincode: ");
-                scanf("%d", &customer.address.pincode);
+                scanf("%s", &customer.address.pincode);
+                
                 displayCustomerInfo(customer);
                 break;
             case 2:
@@ -368,25 +390,12 @@ int main() {
                 break;
             case 6:
                 printf("Are you sure you want to exit? (y/n): ");
-                scanf("%s", yn1);
-                if (strcmp(yn1, "y") == 0) {
-                    printf("Would you like to provide feedback? (y/n): ");
-                    scanf("%s", yn2);
-                    if (strcmp(yn2, "y") == 0) {
-                        printf("Please provide your feedback: ");
-                        char feedback[100];
-                        scanf("%s", feedback);
-                        printf("Thank you for your feedback!\n");
-                    }
-                    else if (strcmp(yn2, "n") == 0) {
-                        printf("Thank you for using our service!\n");
-                    }
-                    else {
-                        printf("Invalid choice! Thank you for using our service!\n");
-                    }
+                scanf("%s", yn);
+                if (strcmp(yn, "y") == 0) {
+                    take_feedback();
                     return 0;
                 }
-                else if (strcmp(yn1, "n") == 0) {
+                else if (strcmp(yn, "n") == 0) {
                     printf("Returning to main menu...\n");
                 }
                 else {
