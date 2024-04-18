@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <Windows.h>
 
 #define MAX_SINGLE_ROOMS 20
 #define MAX_DOUBLE_ROOMS 10
@@ -314,6 +315,104 @@ void genBill(int days, int type, struct Bill bill, struct Customer customer) {
     printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 }
 
+bool payment() {
+    char pay[5];
+    printf("Would you like to make the payment right now? (y/n): ");
+    scanf("%s", pay);
+    if (strcmp(pay, "y") == 0) {
+        printf("\nHow you wanna pay ?\n1. Credit Card\n2. Debit Card\n3. UPI\n4. Net Banking\nEnter your choice: ");
+        int p_choice;
+        scanf("%d", &p_choice);
+        switch (p_choice)
+        {
+        case 1:
+            printf("Enter your Credit Card number: ");
+            long long int cc_number;
+            scanf("%lld", &cc_number);
+            printf("Enter the CVV: ");
+            int cvv;
+            scanf("%d", &cvv);
+            printf("Enter the expiry date (MM/YY): ");
+            char expiry[6];
+            scanf("%s", expiry);
+            printf("Enter the OTP send at your phone number linked to your credit card\n");
+            int otp;
+            scanf("%d", &otp);
+            if (otp == 1234) {
+                return true;
+            }
+            else {
+            printf("OTP Incorrect!\n");
+            printf("Payment unsuccessful!\n");
+            }
+            break;
+        case 2:
+            printf("Enter your Debit Card number: ");
+            long long int dc_number;
+            scanf("%lld", &dc_number);
+            printf("Enter the CVV: ");
+            int cvv2;
+            scanf("%d", &cvv2);
+            printf("Enter the expiry date (MM/YY): ");
+            char expiry2[6];
+            scanf("%s", expiry2);
+            printf("Enter the OTP send at your phone number linked to your debit card\n");
+            int otp2;
+            scanf("%d", &otp2);
+            if (otp2 == 1234) {
+                return true;
+            }
+            else {
+            printf("OTP Incorrect!\n");
+            printf("Payment unsuccessful!\n");
+            }
+            break;
+        case 3:
+            printf("UPI ID: continentalhotel@upi\n");
+            printf("Enter the OTP send at your phone number linked to your UPI ID\n");
+            int otp3;
+            scanf("%d", &otp3);
+            if (otp3 == 1234) {
+                return true;
+            }
+            else {
+            printf("OTP Incorrect!\n");
+            printf("Payment unsuccessful!\n");
+            }
+            break;
+        case 4:
+            printf("Enter your Net Banking ID: ");
+            char netbank[50];
+            scanf("%s", netbank);
+            printf("Enter the password: ");
+            char pass[50];
+            scanf("%s", pass);
+            printf("Enter the OTP send at your phone number linked to your Net Banking ID\n");
+            int otp4;
+            scanf("%d", &otp4);
+            if (otp4 == 1234) {
+                return true;
+            }
+            else {
+            printf("OTP Incorrect!\n");
+            printf("Payment unsuccessful!\n");
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    else if (strcmp(pay, "n") == 0) {
+        printf("Payment cancelled!\n");
+        return false;
+    }
+    else {
+        printf("Invalid choice! Payment cancelled!\n");
+        return false;
+    }
+
+}
+
 void take_feedback() {
     char yn2[5];
     printf("Would you like to provide feedback? (y/n): ");
@@ -341,8 +440,30 @@ int main() {
     initializeRooms();
     int type,roomNumber,days;
     char yn[5];
+    int sucess_pay;
+
+    SetConsoleOutputCP(CP_UTF8);
+    printf("\n");
+    printf("       \\        / |‾‾‾ |    |‾‾‾ |‾‾‾|   /\\  /\\   |‾‾‾\n");
+    printf("        \\  /\\  /  |——  |    |    |   |  /  \\/  \\  |——\n");
+    printf("         \\/  \\/   |___ |___ |___ |___| /        \\ |___\n");
+    printf("\n");
+    printf("               ‾‾|‾‾ |‾‾‾|   ‾‾|‾‾ |   | |‾‾‾\n");
+    printf("                 |   |   |     |   |———| |——\n");
+    printf("                 |   |___|     |   |   | |___\n");
+    printf("\n");
+    printf("|‾‾‾ |‾‾‾| |\\  | ‾‾|‾‾ ‾‾|‾‾ |\\  | |‾‾‾ |\\  | ‾‾|‾‾   /\\   |\n");
+    printf("|    |   | | \\ |   |     |   | \\ | |——  | \\ |   |    /__\\  |\n");
+    printf("|___ |___| |  \\|   |   __|__ |  \\| |___ |  \\|   |   /    \\ |___\n");
+    printf("\n");
+    printf("                 |   | |‾‾‾| ‾‾|‾‾ |‾‾‾ |\n");
+    printf("                 |———| |   |   |   |——  |\n");
+    printf("                 |   | |___|   |   |___ |___\n");
+    printf("\n");
+
     while (true) {
-        printf("\nMenu:\n1. Customer info\n2. Display available rooms\n3. Reserve a room\n4. Cancel Reservation\n5. Generate Bill \n6. Exit\n\nEnter your choice: ");
+
+        printf("\nMenu:\n1. Customer info\n2. Display available rooms\n3. Reserve a room\n4. Cancel Reservation\n5. Generate Bill\n6. Payment\n7. Exit\n\nEnter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -389,17 +510,21 @@ int main() {
                 genBill(days, type, bill, customer);
                 break;
             case 6:
-                printf("Are you sure you want to exit? (y/n): ");
+                sucess_pay = payment();
+                if (sucess_pay) {printf("Payment successful!\n");}
+                break;
+            case 7:
+                printf("Are you sure you want to exit the Menu? (y/n): ");
                 scanf("%s", yn);
                 if (strcmp(yn, "y") == 0) {
                     take_feedback();
                     return 0;
                 }
                 else if (strcmp(yn, "n") == 0) {
-                    printf("Returning to main menu...\n");
+                    printf("Returning to Main Menu...\n");
                 }
                 else {
-                    printf("Invalid choice! Returning to main menu...\n");
+                    printf("Invalid choice! Returning to Main Menu...\n");
                 }
                 break;
             default:
