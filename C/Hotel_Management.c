@@ -54,6 +54,12 @@ void initializeRooms() {
     }
 }
 
+struct about_room{
+    int type;
+    int roomNumber;
+    int days;
+}about_room;
+
 void roomname(int type) {
     if (type == 1) {
         printf("Single Room");
@@ -92,114 +98,114 @@ void displayRooms() {
     printf("\n");
 }
 
-bool reserveSingleRoom(int roomNumber, int days) {
-    if (roomNumber < 1 || roomNumber > MAX_SINGLE_ROOMS) {
+bool reserveSingleRoom(struct about_room about_room) {
+    if (about_room.roomNumber < 1 || about_room.roomNumber > MAX_SINGLE_ROOMS) {
         printf("Invalid room number!\n");
         return false;
     }
 
-    else if (single_rooms[roomNumber - 1].isReserved) {
-        printf("Room %d is already reserved!\n", roomNumber);
+    else if (single_rooms[about_room.roomNumber - 1].isReserved) {
+        printf("Room %d is already reserved!\n", about_room.roomNumber);
         return false;
     }
 
     else {
         printf("For how many days do you want to reserve the room? ");
-        scanf("%d", &days);
-        if (days < 1)
+        scanf("%d", &about_room.days);
+        if (about_room.days < 1)
         {
             printf("Invalid number of days!\n");
             return false;
         }
-        else if (days > 10)
+        else if (about_room.days > 10)
         {
             printf("You can reserve a room for a maximum of 10 days!\n");
             return false;
         }
         else
         {
-            single_rooms[roomNumber - 1].isReserved = true;
-            printf("Room %d reserved successfully!\n", roomNumber);
+            single_rooms[about_room.roomNumber - 1].isReserved = true;
+            printf("Room %d reserved successfully!\n", about_room.roomNumber);
             return true;
         }
     }
 }
 
-bool reserveDoubleRoom(int roomNumber, int days) {
-    if (roomNumber < 1 || roomNumber > MAX_DOUBLE_ROOMS) {
+bool reserveDoubleRoom(struct about_room about_room) {
+    if (about_room.roomNumber < 1 || about_room.roomNumber > MAX_DOUBLE_ROOMS) {
         printf("Invalid room number!\n");
         return false;
     }
 
-    else if (double_rooms[roomNumber - 1].isReserved) {
-        printf("Room %d is already reserved!\n", roomNumber);
+    else if (double_rooms[about_room.roomNumber - 1].isReserved) {
+        printf("Room %d is already reserved!\n", about_room.roomNumber);
         return false;
     }
 
     else {
         printf("For how many days do you want to reserve the room? ");
-        scanf("%d", &days);
-        if (days < 1)
+        scanf("%d", &about_room.days);
+        if (about_room.days < 1)
         {
             printf("Invalid number of days!\n");
             return false;
         }
-        else if (days > 10)
+        else if (about_room.days > 10)
         {
             printf("You can reserve a room for a maximum of 10 days!\n");
             return false;
         }
         else
         {
-            double_rooms[roomNumber - 1].isReserved = true;
-            printf("Room %d reserved successfully!\n", roomNumber);
+            double_rooms[about_room.roomNumber - 1].isReserved = true;
+            printf("Room %d reserved successfully!\n", about_room.roomNumber);
             return true;
         }
     }
 }
 
-bool reserveSuitRoom(int roomNumber, int days) {
-    if (roomNumber < 1 || roomNumber > MAX_SUIT_ROOMS) {
+bool reserveSuitRoom(struct about_room about_room) {
+    if (about_room.roomNumber < 1 || about_room.roomNumber > MAX_SUIT_ROOMS) {
         printf("Invalid room number!\n");
         return false;
     }
 
-    else if (suit_rooms[roomNumber - 1].isReserved) {
-        printf("Room %d is already reserved!\n", roomNumber);
+    else if (suit_rooms[about_room.roomNumber - 1].isReserved) {
+        printf("Room %d is already reserved!\n", about_room.roomNumber);
         return false;
     }
 
     else {
         printf("For how many days do you want to reserve the room? ");
-        scanf("%d", &days);
-        if (days < 1)
+        scanf("%d", &about_room.days);
+        if (about_room.days < 1)
         {
             printf("Invalid number of days!\n");
             return false;
         }
-        else if (days > 10)
+        else if (about_room.days > 10)
         {
             printf("You can reserve a room for a maximum of 10 days!\n");
             return false;
         }
         else
         {
-            suit_rooms[roomNumber - 1].isReserved = true;
-            printf("Room %d reserved successfully!\n", roomNumber);
+            suit_rooms[about_room.roomNumber - 1].isReserved = true;
+            printf("Room %d reserved successfully!\n", about_room.roomNumber);
             return true;
         }
     }
 }
 
-bool reserveRoom(int type, int roomNumber, int days) {
-    if (type == 1) {
-        return reserveSingleRoom(roomNumber, days);
+bool reserveRoom(struct about_room about_room) {
+    if (about_room.type == 1) {
+        return reserveSingleRoom(about_room);
     }
-    else if (type == 2) {
-        return reserveDoubleRoom(roomNumber, days);
+    else if (about_room.type == 2) {
+        return reserveDoubleRoom(about_room);
     }
-    else if (type == 3) {
-        return reserveSuitRoom(roomNumber, days);
+    else if (about_room.type == 3) {
+        return reserveSuitRoom(about_room);
     }
     else {
         printf("Invalid room type!\n");
@@ -283,32 +289,32 @@ struct Bill{
     int gst_cost; 
 }bill;
 
-void gencost(int type, int days, struct Bill bill){
-    if (type == 1) {
+void gencost(struct about_room about_room, struct Bill bill){
+    if (about_room.type == 1) {
         bill.cost_perday = 1500;
     }
-    else if (type == 2) {
+    else if (about_room.type == 2) {
         bill.cost_perday = 2500;
     }
-    else if (type == 3) {
+    else if (about_room.type == 3) {
         bill.cost_perday = 5000;
     }
     else {
         printf("Invalid room type!\n");
     }
-    bill.without_gst_cost = bill.cost_perday * days;
-    bill.gst_cost = bill.cost_perday * days * 1.18;
+    bill.without_gst_cost = bill.cost_perday * about_room.days;
+    bill.gst_cost = bill.cost_perday * about_room.days * 1.18;
 }
 
-void genBill(int days, int type, struct Bill bill, struct Customer customer) {
+void genBill(struct about_room about_room, struct Bill bill, struct Customer customer) {
     printf("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
     printf("Customer Name      : %s\n", customer.name);
     printf("Customer Age       : %d\n", customer.age);
     printf("Customer Phone No  : %lld\n", customer.number);
     printf("Customer Email     : %s\n", customer.mail);
     printf("Customer Address   : %s, %s, %s, %s, %s\n", customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
-    printf("Room Type          : "); roomname(type);
-    printf("No. of days stayed : %d\n", days);
+    printf("Room Type          : "); roomname(about_room.type); printf("\n");
+    printf("No. of days stayed : %d\n", about_room.days);
     printf("Room cost per day  : %d\n", bill.cost_perday);
     printf("Cost (without gst) : %d\n", bill.without_gst_cost);
     printf("Final Cost         : %.2f\n", bill.gst_cost);
@@ -437,8 +443,8 @@ void take_feedback() {
 int main() {
     int choice;
     struct Customer customer;
+    struct about_room about_room;
     initializeRooms();
-    int type,roomNumber,days;
     char yn[5];
     int sucess_pay;
 
@@ -495,19 +501,19 @@ int main() {
                 break;
             case 3:
                 printf("Room types available: \n1. Single Room\n2. Double Room\n3. Suit Room\nEnter your choice: ");
-                scanf("%d", &type);
+                scanf("%d", &about_room.type);
                 printf("Enter the room number to reserve: ");
-                scanf("%d", &roomNumber);
-                reserveRoom(type,roomNumber,days);
+                scanf("%d", &about_room.roomNumber);
+                reserveRoom(about_room);
                 break;
             case 4:
                 printf("Enter the room number to cancel reservation: ");
-                scanf("%d", &roomNumber);
-                cancelReservation(roomNumber);
+                scanf("%d", &about_room.roomNumber);
+                cancelReservation(about_room.roomNumber);
                 break;
             case 5:
-                gencost(type, days, bill);
-                genBill(days, type, bill, customer);
+                gencost(about_room, bill);
+                genBill(about_room, bill, customer);
                 break;
             case 6:
                 sucess_pay = payment();
