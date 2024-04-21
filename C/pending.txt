@@ -1,2 +1,5 @@
-Room capacity
+✅Room capacity (Single|Double|Suit)
+✅Payment & Hotel Name
+Hotel Details (About Us)
+✅Multi Structure in Address - House/Appartment Street City State Pincode
 Make for Different hotels and run it parallel
