@@ -98,114 +98,48 @@ void displayRooms() {
     printf("\n");
 }
 
-bool reserveSingleRoom(struct about_room about_room) {
-    if (about_room.roomNumber < 1 || about_room.roomNumber > MAX_SINGLE_ROOMS) {
+bool myRoom(struct about_room *about_room, int MAX) {
+    if (about_room->roomNumber < 1 || about_room->roomNumber > MAX) {
         printf("Invalid room number!\n");
         return false;
     }
 
-    else if (single_rooms[about_room.roomNumber - 1].isReserved) {
-        printf("Room %d is already reserved!\n", about_room.roomNumber);
+    else if (single_rooms[about_room->roomNumber - 1].isReserved) {
+        printf("Room %d is already reserved!\n", about_room->roomNumber);
         return false;
     }
 
     else {
         printf("For how many days do you want to reserve the room? ");
-        scanf("%d", &about_room.days);
-        if (about_room.days < 1)
+        scanf("%d", &about_room->days);
+        if (about_room->days < 1)
         {
             printf("Invalid number of days!\n");
             return false;
         }
-        else if (about_room.days > 10)
+        else if (about_room->days > 10)
         {
             printf("You can reserve a room for a maximum of 10 days!\n");
             return false;
         }
         else
         {
-            single_rooms[about_room.roomNumber - 1].isReserved = true;
-            printf("Room %d reserved successfully!\n", about_room.roomNumber);
+            single_rooms[about_room->roomNumber - 1].isReserved = true;
+            printf("Room %d reserved successfully!\n", about_room->roomNumber);
             return true;
         }
     }
 }
 
-bool reserveDoubleRoom(struct about_room about_room) {
-    if (about_room.roomNumber < 1 || about_room.roomNumber > MAX_DOUBLE_ROOMS) {
-        printf("Invalid room number!\n");
-        return false;
+bool reserveRoom(struct about_room *about_room) {
+    if (about_room->type == 1) {
+        return myRoom(about_room, MAX_SINGLE_ROOMS);
     }
-
-    else if (double_rooms[about_room.roomNumber - 1].isReserved) {
-        printf("Room %d is already reserved!\n", about_room.roomNumber);
-        return false;
+    else if (about_room->type == 2) {
+        return myRoom(about_room, MAX_DOUBLE_ROOMS);
     }
-
-    else {
-        printf("For how many days do you want to reserve the room? ");
-        scanf("%d", &about_room.days);
-        if (about_room.days < 1)
-        {
-            printf("Invalid number of days!\n");
-            return false;
-        }
-        else if (about_room.days > 10)
-        {
-            printf("You can reserve a room for a maximum of 10 days!\n");
-            return false;
-        }
-        else
-        {
-            double_rooms[about_room.roomNumber - 1].isReserved = true;
-            printf("Room %d reserved successfully!\n", about_room.roomNumber);
-            return true;
-        }
-    }
-}
-
-bool reserveSuitRoom(struct about_room about_room) {
-    if (about_room.roomNumber < 1 || about_room.roomNumber > MAX_SUIT_ROOMS) {
-        printf("Invalid room number!\n");
-        return false;
-    }
-
-    else if (suit_rooms[about_room.roomNumber - 1].isReserved) {
-        printf("Room %d is already reserved!\n", about_room.roomNumber);
-        return false;
-    }
-
-    else {
-        printf("For how many days do you want to reserve the room? ");
-        scanf("%d", &about_room.days);
-        if (about_room.days < 1)
-        {
-            printf("Invalid number of days!\n");
-            return false;
-        }
-        else if (about_room.days > 10)
-        {
-            printf("You can reserve a room for a maximum of 10 days!\n");
-            return false;
-        }
-        else
-        {
-            suit_rooms[about_room.roomNumber - 1].isReserved = true;
-            printf("Room %d reserved successfully!\n", about_room.roomNumber);
-            return true;
-        }
-    }
-}
-
-bool reserveRoom(struct about_room about_room) {
-    if (about_room.type == 1) {
-        return reserveSingleRoom(about_room);
-    }
-    else if (about_room.type == 2) {
-        return reserveDoubleRoom(about_room);
-    }
-    else if (about_room.type == 3) {
-        return reserveSuitRoom(about_room);
+    else if (about_room->type == 3) {
+        return myRoom(about_room, MAX_SUIT_ROOMS);
     }
     else {
         printf("Invalid room type!\n");
@@ -213,8 +147,8 @@ bool reserveRoom(struct about_room about_room) {
     }
 }
 
-bool cancelSingleRoom(int roomNumber) {
-    if (roomNumber < 1 || roomNumber > MAX_SINGLE_ROOMS) {
+bool cancelRoom(int roomNumber, int MAX) {
+    if (roomNumber < 1 || roomNumber > MAX) {
         printf("Invalid room number!\n");
         return false;
     }
@@ -231,51 +165,15 @@ bool cancelSingleRoom(int roomNumber) {
     }
 }
 
-bool cancelDoubleRoom(int roomNumber) {
-    if (roomNumber < 1 || roomNumber > MAX_DOUBLE_ROOMS) {
-        printf("Invalid room number!\n");
-        return false;
-    }
-
-    else if (!double_rooms[roomNumber - 1].isReserved) {
-        printf("Room %d is not reserved!\n", roomNumber);
-        return false;
-    }
-
-    else {
-        double_rooms[roomNumber - 1].isReserved = false;
-        printf("Reservation for room %d cancelled successfully!\n", roomNumber);
-        return true;
-    }
-}
-
-bool cancelSuitRoom(int roomNumber) {
-    if (roomNumber < 1 || roomNumber > MAX_SUIT_ROOMS) {
-        printf("Invalid room number!\n");
-        return false;
-    }
-
-    else if (!suit_rooms[roomNumber - 1].isReserved) {
-        printf("Room %d is not reserved!\n", roomNumber);
-        return false;
-    }
-
-    else {
-        suit_rooms[roomNumber - 1].isReserved = false;
-        printf("Reservation for room %d cancelled successfully!\n", roomNumber);
-        return true;
-    }
-}
-
 bool cancelReservation(int roomNumber) {
     if (roomNumber > 1 && roomNumber <= MAX_SINGLE_ROOMS) {
-        return cancelSingleRoom(roomNumber);
+        return cancelRoom(roomNumber, MAX_SINGLE_ROOMS);
     }
     else if (roomNumber > MAX_SINGLE_ROOMS && roomNumber <= MAX_SINGLE_ROOMS + MAX_DOUBLE_ROOMS) {
-        return cancelDoubleRoom(roomNumber);
+        return cancelRoom(roomNumber, MAX_DOUBLE_ROOMS);
     }
     else if (roomNumber > MAX_SINGLE_ROOMS + MAX_DOUBLE_ROOMS && roomNumber <= MAX_SINGLE_ROOMS + MAX_DOUBLE_ROOMS + MAX_SUIT_ROOMS) {
-        return cancelSuitRoom(roomNumber);
+        return cancelRoom(roomNumber, MAX_SUIT_ROOMS);
     }
     else {
         printf("Invalid room number!\n");
@@ -285,25 +183,25 @@ bool cancelReservation(int roomNumber) {
 
 struct Bill{
     int cost_perday;
-    int without_gst_cost;
-    int gst_cost; 
+    float without_gst_cost;
+    float gst_cost; 
 }bill;
 
-void gencost(struct about_room about_room, struct Bill bill){
+void gencost(struct about_room about_room, struct Bill *bill){
     if (about_room.type == 1) {
-        bill.cost_perday = 1500;
+        bill->cost_perday = 1500;
     }
     else if (about_room.type == 2) {
-        bill.cost_perday = 2500;
+        bill->cost_perday = 2500;
     }
     else if (about_room.type == 3) {
-        bill.cost_perday = 5000;
+        bill->cost_perday = 5000;
     }
     else {
         printf("Invalid room type!\n");
     }
-    bill.without_gst_cost = bill.cost_perday * about_room.days;
-    bill.gst_cost = bill.cost_perday * about_room.days * 1.18;
+    bill->without_gst_cost = bill->cost_perday * about_room.days;
+    bill->gst_cost = bill->cost_perday * about_room.days * 1.18;
 }
 
 void genBill(struct about_room about_room, struct Bill bill, struct Customer customer) {
@@ -316,8 +214,8 @@ void genBill(struct about_room about_room, struct Bill bill, struct Customer cus
     printf("Room Type          : "); roomname(about_room.type); printf("\n");
     printf("No. of days stayed : %d\n", about_room.days);
     printf("Room cost per day  : %d\n", bill.cost_perday);
-    printf("Cost (without gst) : %d\n", bill.without_gst_cost);
-    printf("Final Cost         : %.2f\n", bill.gst_cost);
+    printf("Cost (without gst) : %.f\n", bill.without_gst_cost);
+    printf("Final Cost         : %.f\n", bill.gst_cost);
     printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 }
 
@@ -504,7 +402,7 @@ int main() {
                 scanf("%d", &about_room.type);
                 printf("Enter the room number to reserve: ");
                 scanf("%d", &about_room.roomNumber);
-                reserveRoom(about_room);
+                reserveRoom(&about_room);
                 break;
             case 4:
                 printf("Enter the room number to cancel reservation: ");
@@ -512,7 +410,7 @@ int main() {
                 cancelReservation(about_room.roomNumber);
                 break;
             case 5:
-                gencost(about_room, bill);
+                gencost(about_room, &bill);
                 genBill(about_room, bill, customer);
                 break;
             case 6:
