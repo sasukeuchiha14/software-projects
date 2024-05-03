@@ -272,7 +272,7 @@ bool payment() {
             }
             break;
         case 3:
-            printf("UPI ID: continentalhotel@upi\n");
+            printf("\nUPI ID: continentalhotel@upi\n");
             printf("Enter the OTP send at your phone number linked to your UPI ID\n");
             int otp3;
             scanf("%d", &otp3);
@@ -314,7 +314,6 @@ bool payment() {
         printf("Invalid choice! Payment cancelled!\n");
         return false;
     }
-
 }
 
 void take_feedback() {
@@ -322,9 +321,14 @@ void take_feedback() {
     printf("Would you like to provide feedback? (y/n): ");
     scanf("%s", yn2);
     if (strcmp(yn2, "y") == 0) {
-        printf("Please provide your feedback: ");
+        FILE *fp;
+        fp = fopen("Feedback.txt", "a");
         char feedback[100];
-        scanf("%s", feedback);
+        printf("Please provide your feedback in Single Line: ");
+        scanf(" %[^\n]%*c", feedback);
+        fprintf(fp, "%s", feedback);
+        fprintf(fp, "\n\n");
+        fclose(fp);
         printf("\n");
         printf("Thank you for your feedback!\n");
     }
@@ -383,7 +387,7 @@ int main() {
                 printf("Enter customer address as follows: ");
                 printf("\n\tHouse/Apartment: ");
                 scanf(" %[^\n]%*c", customer.address.house_appartment);
-                printf("\tStreet: ");
+                printf("\tStreet/Colony: ");
                 scanf(" %[^\n]%*c", customer.address.street);
                 printf("\tCity: ");
                 scanf("%s", customer.address.city);
