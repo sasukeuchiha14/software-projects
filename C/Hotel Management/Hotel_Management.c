@@ -98,13 +98,13 @@ void displayRooms() {
     printf("\n");
 }
 
-bool myRoom(struct about_room *about_room, int MAX) {
+bool myRoom(struct about_room *about_room, int MAX, Room *rooms_type) {
     if (about_room->roomNumber < 1 || about_room->roomNumber > MAX) {
         printf("Invalid room number!\n");
         return false;
     }
 
-    else if (single_rooms[about_room->roomNumber - 1].isReserved) {
+    else if (rooms_type[about_room->roomNumber - 1].isReserved) {
         printf("Room %d is already reserved!\n", about_room->roomNumber);
         return false;
     }
@@ -124,7 +124,7 @@ bool myRoom(struct about_room *about_room, int MAX) {
         }
         else
         {
-            single_rooms[about_room->roomNumber - 1].isReserved = true;
+            rooms_type[about_room->roomNumber - 1].isReserved = true;
             printf("Room %d reserved successfully!\n", about_room->roomNumber);
             return true;
         }
@@ -133,13 +133,13 @@ bool myRoom(struct about_room *about_room, int MAX) {
 
 bool reserveRoom(struct about_room *about_room) {
     if (about_room->type == 1) {
-        return myRoom(about_room, MAX_SINGLE_ROOMS);
+        return myRoom(about_room, MAX_SINGLE_ROOMS, single_rooms);
     }
     else if (about_room->type == 2) {
-        return myRoom(about_room, MAX_DOUBLE_ROOMS);
+        return myRoom(about_room, MAX_DOUBLE_ROOMS, double_rooms);
     }
     else if (about_room->type == 3) {
-        return myRoom(about_room, MAX_SUIT_ROOMS);
+        return myRoom(about_room, MAX_SUIT_ROOMS, suit_rooms);
     }
     else {
         printf("Invalid room type!\n");
