@@ -1,0 +1,165 @@
+*{
+    font-family: "Segoe UI";
+    max-width: 100vw;
+}
+
+.logo img{
+    width: 164px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.right ul {
+    display: flex;
+    gap: 34px;
+}
+
+.right ul li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.right ul li span{
+    padding: 0 5px;
+}
+
+.download{
+    text-align: center;
+}
+
+h1{
+    font-size: 40px;
+    font-weight: 400;
+}
+
+strong{
+    font-weight: 700;
+}
+
+small{
+    font-size: 60%;
+}
+
+small a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.upper_main{
+    display: flex;
+    align-items: center;
+    width: 50vw;
+    margin: 40px auto;
+    gap: 20px;
+}
+
+h3{
+    font-weight: 400;
+}
+
+.download button {
+    background-color: #09a6bd;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.download button:hover{
+    background-color: #0b8fa3;
+}
+
+.download button a{
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+}
+
+.main{
+    display: grid;
+    grid-template-areas: "one two three"
+               "four five six"
+               "seven eight nine"
+               "ten eleven twelve";
+    max-width: 50vw;
+    margin: auto;
+}
+
+.main .comp{
+    background-color: #e3e3e335;
+    border: none;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.main .comp h3{
+    font-weight: 700;
+    margin: 0;
+}
+
+.main .comp a button{
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.box1{
+    grid-area: one;
+}
+.box2{
+    grid-area: two;
+}
+.box3{
+    grid-area: three;
+}
+.box4{
+    grid-area: four;
+}
+.box5{
+    grid-area: five;
+}
+.box6{
+    grid-area: six;
+}
+.box7{
+    grid-area: seven;
+}
+.box8{
+    grid-area: eight;
+}
+.box9{
+    grid-area: nine;
+}
+.box10{
+    grid-area: ten;
+}
+
+@media screen and (max-width: 1145px) {
+    .main{ 
+        grid-template-areas: "one"
+                             "two"
+                             "three"
+                             "four"
+                             "five"
+                             "six"
+                             "seven"
+                             "eight"
+                             "nine"
+                             "ten"
+                             "eleven"
+                             "twelve"; 
+    }
+}
