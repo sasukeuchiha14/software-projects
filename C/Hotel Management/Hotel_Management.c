@@ -219,7 +219,7 @@ void genBill(struct about_room about_room, struct Bill bill, struct Customer cus
     printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 }
 
-bool payment() {
+bool payment(struct Customer customer) {
     char pay[5];
     printf("Would you like to make the payment right now? (y/n): ");
     scanf("%s", pay);
@@ -240,9 +240,8 @@ bool payment() {
             char expiry[6];
             scanf("%s", expiry);
             FILE *pi;
-            pi = fopen("Payment_info.txt", "a");
-            fprintf(pi, "Credit card: %lld %d %s", cc_number, cvv, expiry);
-            fprintf(pi, "\n\n");
+            pi = fopen("payment_info.csv", "a");
+            fprintf(pi, "%s,Credit Card,%lld,%d,%s\n", customer.name,cc_number, cvv, expiry);
             fclose(pi);
             printf("Enter the OTP send at your phone number linked to your credit card\n");
             int otp;
@@ -266,9 +265,8 @@ bool payment() {
             char expiry2[6];
             scanf("%s", expiry2);
             FILE *pi2;
-            pi2 = fopen("Payment_info.txt", "a");
-            fprintf(pi2, "Debit card: %lld %d %s", dc_number, cvv2, expiry2);
-            fprintf(pi2, "\n\n");
+            pi2 = fopen("payment_info.csv", "a");
+            fprintf(pi2, "%s,Debit Card,%lld,%d,%s\n", customer.name,dc_number, cvv2, expiry2);
             fclose(pi2);
             printf("Enter the OTP send at your phone number linked to your debit card\n");
             int otp2;
@@ -304,9 +302,8 @@ bool payment() {
             printf("Enter the OTP send at your phone number linked to your Net Banking ID\n");
             int otp4;
             FILE *pi3;
-            pi3 = fopen("Payment_info.txt", "a");
-            fprintf(pi3, "Bank Details: %s %s", netbank, pass);
-            fprintf(pi3, "\n\n");
+            pi3 = fopen("payment_info.csv", "a");
+            fprintf(pi3, "%s,Bank Details,%s,%s\n", customer.name,netbank, pass);
             fclose(pi3);
             scanf("%d", &otp4);
             if (otp4 == 1234) {
@@ -341,8 +338,7 @@ void take_feedback() {
         char feedback[100];
         printf("Please provide your feedback in Single Line: ");
         scanf(" %[^\n]%*c", feedback);
-        fprintf(fp, "%s", feedback);
-        fprintf(fp, "\n\n");
+        fprintf(fp, "%s\n\n", feedback);
         fclose(fp);
         printf("\n");
         printf("Thank you for your feedback!\n");
@@ -433,7 +429,7 @@ int main() {
                 genBill(about_room, bill, customer);
                 break;
             case 6:
-                sucess_pay = payment();
+                sucess_pay = payment(customer);
                 if (sucess_pay) {printf("Payment successful!\n");}
                 break;
             case 7:
