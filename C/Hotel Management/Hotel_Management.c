@@ -513,7 +513,7 @@ int main() {
     while (true) {
 
         printf("\nMenu:\n1. Customer info\n2. Display available rooms\n3. Reserve a room\n4. Cancel Reservation\n5. Generate Bill\n6. Payment\n7. Exit\n\nEnter your choice: ");
-        
+
         if (scanf("%d", &choice) != 1) {
             printf("Invalid choice! Please try again.\n");
             fflush(stdin);
@@ -570,7 +570,9 @@ int main() {
                 printf("Are you sure you want to exit the Menu? (y/n): ");
                 scanf("%s", yn);
                 if (strcmp(yn, "y") == 0) {
-                    booking_history(customer, about_room, bill, payment_info);
+                    if (strcmp(payment_info, "Cancelled") != 0 && strcmp(payment_info, "Invalid") != 0) {
+                        booking_history(customer, about_room, bill, payment_info);
+                    }
                     take_feedback();
                     return 0;
                 }
