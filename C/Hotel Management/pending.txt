@@ -12,7 +12,7 @@
 
 ✅Room status update: Allow hotel staff to update the status of rooms, such as cleaning in progress, under maintenance, or out of service.
 
-Booking history: Maintain a record of all room reservations made by customers, including check-in and check-out dates.
+✅Booking history: Maintain a record of all room reservations made by customers, including check-in and check-out dates.
 
 Room service: Add functionality for customers to request room service, such as food, beverages, or housekeeping.
 

@@ -64,18 +64,18 @@ struct about_room{
     int days;
 }about_room;
 
-void roomname(int type) {
+char* roomname(int type) {
     if (type == 1) {
-        printf("Single Room");
+        return "Single Room";
     }
     else if (type == 2) {
-        printf("Double Room");
+        return "Double Room";
     }
     else if (type == 3) {
-        printf("Suit Room");
+        return "Suit Room";
     }
     else {
-        printf("Invalid room type!\n");
+        return "Invalid room type!";
     }
 }
 
@@ -192,7 +192,7 @@ bool cancelReservation(int roomNumber) {
 struct Bill{
     int cost_perday;
     float without_gst_cost;
-    float gst_cost; 
+    float gst_cost;
 }bill;
 
 void gencost(struct about_room about_room, struct Bill *bill){
@@ -219,7 +219,7 @@ void genBill(struct about_room about_room, struct Bill bill, struct Customer cus
     printf("Customer Phone No  : %lld\n", customer.number);
     printf("Customer Email     : %s\n", customer.mail);
     printf("Customer Address   : %s, %s, %s, %s, %s\n", customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
-    printf("Room Type          : "); roomname(about_room.type); printf("\n");
+    printf("Room Type          : %s\n",roomname(about_room.type));
     printf("No. of days stayed : %d\n", about_room.days);
     printf("Room cost per day  : %d\n", bill.cost_perday);
     printf("Cost (without gst) : %.f\n", bill.without_gst_cost);
@@ -227,7 +227,7 @@ void genBill(struct about_room about_room, struct Bill bill, struct Customer cus
     printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 }
 
-bool payment(struct Customer customer) {
+char* payment(struct Customer customer) {
     char pay[5];
     printf("Would you like to make the payment right now? (y/n): ");
     scanf("%s", pay);
@@ -255,7 +255,8 @@ bool payment(struct Customer customer) {
             int otp;
             scanf("%d", &otp);
             if (otp == 1234) {
-                return true;
+                printf("Payment successful!\n");
+                return "Credit Card";
             }
             else {
             printf("OTP Incorrect!\n");
@@ -280,7 +281,8 @@ bool payment(struct Customer customer) {
             int otp2;
             scanf("%d", &otp2);
             if (otp2 == 1234) {
-                return true;
+                printf("Payment successful!\n");
+                return "Debit Card";
             }
             else {
             printf("OTP Incorrect!\n");
@@ -293,7 +295,8 @@ bool payment(struct Customer customer) {
             int otp3;
             scanf("%d", &otp3);
             if (otp3 == 1234) {
-                return true;
+                printf("Payment successful!\n");
+                return "UPI";
             }
             else {
             printf("OTP Incorrect!\n");
@@ -315,7 +318,8 @@ bool payment(struct Customer customer) {
             fclose(pi3);
             scanf("%d", &otp4);
             if (otp4 == 1234) {
-                return true;
+                printf("Payment successful!\n");
+                return "Net Banking";
             }
             else {
             printf("OTP Incorrect!\n");
@@ -328,12 +332,23 @@ bool payment(struct Customer customer) {
     }
     else if (strcmp(pay, "n") == 0) {
         printf("Payment cancelled!\n");
-        return false;
+        return "Cancelled";
     }
     else {
         printf("Invalid choice! Payment cancelled!\n");
-        return false;
+        return "Invalid";
     }
+}
+
+void booking_history(struct Customer customer, struct about_room about_room, struct Bill bill, char* payment_info) {
+    FILE *fp;
+    fp = fopen("Booking_History.csv", "a");
+    fprintf(fp, "%s,", customer.name);
+    fprintf(fp, "%s%s%s%s%s,",customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
+    fprintf(fp, "%lld,%s,",customer.number,customer.mail);
+    fprintf(fp, "%s,%d,%d,",roomname(about_room.type),about_room.roomNumber,about_room.days);
+    fprintf(fp, "%s\n",payment_info);
+    fclose(fp);
 }
 
 void take_feedback() {
@@ -474,7 +489,7 @@ int main() {
     struct about_room about_room;
     initializeRooms();
     char yn[5];
-    int sucess_pay;
+    char* payment_info = malloc(20 * sizeof(char));
 
     SetConsoleOutputCP(CP_UTF8);
     printf("\n");
@@ -498,7 +513,12 @@ int main() {
     while (true) {
 
         printf("\nMenu:\n1. Customer info\n2. Display available rooms\n3. Reserve a room\n4. Cancel Reservation\n5. Generate Bill\n6. Payment\n7. Exit\n\nEnter your choice: ");
-        scanf("%d", &choice);
+        
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid choice! Please try again.\n");
+            fflush(stdin);
+            continue;
+        }
 
         switch (choice) {
             case 1:
@@ -544,13 +564,13 @@ int main() {
                 genBill(about_room, bill, customer);
                 break;
             case 6:
-                sucess_pay = payment(customer);
-                if (sucess_pay) {printf("Payment successful!\n");}
+                payment_info = payment(customer);
                 break;
             case 7:
                 printf("Are you sure you want to exit the Menu? (y/n): ");
                 scanf("%s", yn);
                 if (strcmp(yn, "y") == 0) {
+                    booking_history(customer, about_room, bill, payment_info);
                     take_feedback();
                     return 0;
                 }
