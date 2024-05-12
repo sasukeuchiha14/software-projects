@@ -33,6 +33,7 @@ void displayCustomerInfo(struct Customer customer) {
 typedef struct {
     int roomNumber;
     bool isReserved;
+    char status[50];
 } Room;
 
 Room single_rooms[MAX_SINGLE_ROOMS];
@@ -43,14 +44,17 @@ void initializeRooms() {
     for (int i = 0; i < MAX_SINGLE_ROOMS; i++) {
         single_rooms[i].roomNumber = i + 1;
         single_rooms[i].isReserved = false;
+        strcpy(single_rooms[i].status, "Room is Available!");
     }
     for (int i = 0; i < MAX_DOUBLE_ROOMS; i++) {
         double_rooms[i].roomNumber = i + 1;
         double_rooms[i].isReserved = false;
+        strcpy(double_rooms[i].status, "Room is Available!");
     }
     for (int i = 0; i < MAX_SUIT_ROOMS; i++) {
         suit_rooms[i].roomNumber = i + 1;
         suit_rooms[i].isReserved = false;
+        strcpy(suit_rooms[i].status, "Room is Available!");
     }
 }
 
@@ -126,6 +130,9 @@ bool myRoom(struct about_room *about_room, int MAX, Room *rooms_type) {
         {
             rooms_type[about_room->roomNumber - 1].isReserved = true;
             printf("Room %d reserved successfully!\n", about_room->roomNumber);
+            char status_name[50];
+            sprintf(status_name, "Reserved by Customer for %d days!", about_room->days);
+            strcpy(rooms_type[about_room->roomNumber - 1].status, status_name);
             return true;
         }
     }
@@ -161,6 +168,7 @@ bool cancelRoom(int roomNumber, int MAX) {
     else {
         single_rooms[roomNumber - 1].isReserved = false;
         printf("Reservation for room %d cancelled successfully!\n", roomNumber);
+        strcpy(single_rooms[roomNumber - 1].status, "Room is Available now!");
         return true;
     }
 }
@@ -353,6 +361,113 @@ void take_feedback() {
     }
 }
 
+void displayRooms_withStatus() {
+    printf("\nSingle Rooms:\n");
+    for (int i = 0; i < MAX_SINGLE_ROOMS; i++) {
+        if (single_rooms[i].isReserved) {
+            printf("Room %d: Reserved\n", single_rooms[i].roomNumber);
+            printf("Status: %s\n", single_rooms[i].status);
+        }
+        else {
+            printf("Room %d: Available\n", single_rooms[i].roomNumber);
+            printf("Status: %s\n", single_rooms[i].status);
+        }
+    }
+    printf("\nDouble Rooms:\n");
+    for (int i = 0; i < MAX_DOUBLE_ROOMS; i++) {
+        if (double_rooms[i].isReserved) {
+            printf("Room %d: Reserved\n", double_rooms[i].roomNumber);
+            printf("Status: %s\n", double_rooms[i].status);
+        }
+        else {
+            printf("Room %d: Available\n", double_rooms[i].roomNumber);
+            printf("Status: %s\n", double_rooms[i].status);
+        }
+    }
+    printf("\nSuit Rooms:\n");
+    for (int i = 0; i < MAX_SUIT_ROOMS; i++) {
+        if (suit_rooms[i].isReserved) {
+            printf("Room %d: Reserved\n", suit_rooms[i].roomNumber);
+            printf("Status: %s\n", suit_rooms[i].status);
+        }
+        else {
+            printf("Room %d: Available\n", suit_rooms[i].roomNumber);
+            printf("Status: %s\n", suit_rooms[i].status);
+        }
+    }
+
+}
+
+void changeRoomStatus(int max_room, Room *rooms_type) {
+    printf("Enter the room number to change the status: ");
+    int roomnum;
+    char status[50];
+    scanf("%d", &roomnum);
+    if (roomnum > 1 && roomnum <= max_room) {
+        rooms_type[roomnum - 1].isReserved = !rooms_type[roomnum - 1].isReserved;
+        if (rooms_type[roomnum - 1].isReserved) {
+            printf("Room %d status changed to reserved!\n", roomnum);
+            scanf("%s", rooms_type[roomnum - 1].status);
+        }
+        else {
+            printf("Room %d status changed to available!\n", roomnum);
+            strcpy(rooms_type[roomnum - 1].status, "Room is Available now!");
+        }
+    }
+    else {
+        printf("Invalid room number!\n");
+    }
+}
+
+void adminPortal() {
+    char username[20];
+    char password[20];
+
+    printf("\nADMIN PORTAL\n");
+    printf("Enter username: ");
+    scanf("%s", username);
+    printf("Enter password: ");
+    scanf("%s", password);
+
+    if ((strcmp(username, "hardik") == 0 && strcmp(password, "continental7123") == 0) || (strcmp(username, "admin") == 0 && strcmp(password, "admin") == 0)) {
+        printf("\nWelcome, %s!\n", username);
+        printf("\nRoom Status:\n");
+        displayRooms_withStatus();
+        printf("\nWould you Like to change the status of any room? (y/n): ");
+        char yn[5];
+        scanf("%s", yn);
+        if (strcmp(yn, "y") == 0) {
+            printf("Enter the room type to change the status: ");
+            int roomtype;
+            scanf("%d", &roomtype);
+            if (roomtype < 1 || roomtype > 3) {
+                printf("Invalid room type!\n");
+            }
+            else if (roomtype == 1) {
+                changeRoomStatus(MAX_SINGLE_ROOMS, single_rooms);
+            }
+            else if (roomtype == 2) {
+                changeRoomStatus(MAX_DOUBLE_ROOMS, double_rooms);
+            }
+            else if (roomtype == 3) {
+                changeRoomStatus(MAX_SUIT_ROOMS, suit_rooms);
+            }
+            else {
+                printf("Invalid room type!\n");
+            }
+        }
+        else if (strcmp(yn, "n") == 0) {
+            printf("Returning to Main Menu...\n");
+        }
+        else {
+            printf("Invalid choice! Returning to Main Menu...\n");
+        }
+    }
+    else {
+        printf("Invalid credentials! Access denied.\n");
+    }
+}
+
 int main() {
     int choice;
     struct Customer customer;
@@ -445,6 +560,9 @@ int main() {
                 else {
                     printf("Invalid choice! Returning to Main Menu...\n");
                 }
+                break;
+            case 100:
+                adminPortal();
                 break;
             default:
                 printf("Invalid choice! Please try again.\n");

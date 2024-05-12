@@ -1,22 +1,20 @@
+✅Remove Rooms visibility after they are occupied
+
 ✅Room capacity (Single|Double|Suit)
 
 ✅Payment & Hotel Name
 
-✅Multi Structure in Address - House/Appartment Street City State Pincode
+✅Multi Structure in Address: House/Appartment Street City State Pincode
 
-✅Remove Rooms visibility after they are occupied
+✅Admin Portal: Some comands only available to admin
 
-Hotel Details (About Us)
+✅User authentication: Implement a login system to secure access to the hotel management system and restrict certain operations to authorized users.
 
-Room availability check: Implement a feature that allows users to check the availability of rooms for a specific date range.
+✅Room status update: Allow hotel staff to update the status of rooms, such as cleaning in progress, under maintenance, or out of service.
 
-Room booking history: Maintain a record of all room reservations made by customers, including check-in and check-out dates.
+Booking history: Maintain a record of all room reservations made by customers, including check-in and check-out dates.
 
 Room service: Add functionality for customers to request room service, such as food, beverages, or housekeeping.
-
-User authentication: Implement a login system to secure access to the hotel management system and restrict certain operations to authorized users.
-
-Room status update: Allow hotel staff to update the status of rooms, such as cleaning in progress, under maintenance, or out of service.
 
 Reporting and analytics: Provide reports and analytics on room occupancy rates, revenue, and customer feedback to help with decision-making and business analysis.
 
