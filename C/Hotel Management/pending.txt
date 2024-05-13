@@ -16,6 +16,10 @@
 
 ✅Booking history: Maintain a record of all room reservations made by customers, including check-in and check-out dates.
 
+✅Search: search for a customer (name|phone number|email)
+
+Room service: add room service charges to a customer's bill.
+
 Room service: Add functionality for customers to request room service, such as food, beverages, or housekeeping.
 
 Reporting and analytics: Provide reports and analytics on room occupancy rates, revenue, and customer feedback to help with decision-making and business analysis.
