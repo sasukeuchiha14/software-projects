@@ -233,7 +233,7 @@ char* payment(struct Customer customer) {
     printf("Would you like to make the payment right now? (y/n): ");
     scanf("%s", pay);
     if (strcmp(pay, "y") == 0) {
-        printf("\nHow you wanna pay ?\n1. Credit Card\n2. Debit Card\n3. UPI\n4. Net Banking\nEnter your choice: ");
+        printf("\nHow you wanna pay ?\n1. Credit Card\n2. Debit Card\n3. UPI\n4. Net Banking\n5. Cash\nEnter your choice: ");
         int p_choice;
         scanf("%d", &p_choice);
         switch (p_choice)
@@ -325,6 +325,18 @@ char* payment(struct Customer customer) {
             else {
             printf("OTP Incorrect!\n");
             printf("Payment unsuccessful!\n");
+            }
+            break;
+        case 5:
+            printf("Enter the 7 digit code given by the receptionist: ");
+            int code;
+            scanf("%d", &code);
+            if (code == 1234567) {
+                printf("Payment successful!\n");
+                return "Cash";
+            }
+            else {
+                printf("Invalid code! Payment unsuccessful!\n");
             }
             break;
         default:
@@ -524,6 +536,107 @@ void staff_credentials() {
     }
 }
 
+void search_customer() {
+    printf("How you wanna search ?\n1. By Name\n2. By Phone Number\n3. By Email\nEnter your choice: ");
+    int search_choice;
+    scanf("%d", &search_choice);
+    switch (search_choice) {
+        case 1:
+            printf("Enter the name to search: ");
+            char search_name[50];
+            scanf("%s", search_name);
+            FILE *fp_search;
+            fp_search = fopen("Booking_History.csv", "r");
+            char line[256];
+            char name_search[50];
+            char address_search[50];
+            long long int number_search;
+            char mail_search[50];
+            char roomtype_search[50];
+            int roomnumber_search;
+            int days_search;
+            char payment_search[50];
+            while (fgets(line, sizeof(line), fp_search) != NULL) {
+                sscanf(line, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search, address_search, &number_search, mail_search, roomtype_search, &roomnumber_search, &days_search, payment_search);
+                if (strcmp(name_search, search_name) == 0) {
+                    printf("\nCustomer Name      : %s\n", name_search);
+                    printf("Customer Address   : %s\n", address_search);
+                    printf("Customer Phone No  : %lld\n", number_search);
+                    printf("Customer Email     : %s\n", mail_search);
+                    printf("Room Type          : %s\n", roomtype_search);
+                    printf("Room Number        : %d\n", roomnumber_search);
+                    printf("No. of days stayed : %d\n", days_search);
+                    printf("Payment Method     : %s\n", payment_search);
+                }
+            }
+            fclose(fp_search);
+            break;
+        case 2:
+            printf("Enter the phone number to search: ");
+            long long int search_number;
+            scanf("%lld", &search_number);
+            FILE *fp_search2;
+            fp_search2 = fopen("Booking_History.csv", "r");
+            char line2[256];
+            char name_search2[50];
+            char address_search2[50];
+            long long int number_search2;
+            char mail_search2[50];
+            char roomtype_search2[50];
+            int roomnumber_search2;
+            int days_search2;
+            char payment_search2[50];
+            while (fgets(line2, sizeof(line2), fp_search2) != NULL) {
+                sscanf(line2, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search2, address_search2, &number_search2, mail_search2, roomtype_search2, &roomnumber_search2, &days_search2, payment_search2);
+                if (number_search2 == search_number) {
+                    printf("\nCustomer Name      : %s\n", name_search2);
+                    printf("Customer Address   : %s\n", address_search2);
+                    printf("Customer Phone No  : %lld\n", number_search2);
+                    printf("Customer Email     : %s\n", mail_search2);
+                    printf("Room Type          : %s\n", roomtype_search2);
+                    printf("Room Number        : %d\n", roomnumber_search2);
+                    printf("No. of days stayed : %d\n", days_search2);
+                    printf("Payment Method     : %s\n", payment_search2);
+                }
+            }
+            fclose(fp_search2);
+            break;
+        case 3:
+            printf("Enter the email to search: ");
+            char search_mail[50];
+            scanf("%s", search_mail);
+            FILE *fp_search3;
+            fp_search3 = fopen("Booking_History.csv", "r");
+            char line3[256];
+            char name_search3[50];
+            char address_search3[50];
+            long long int number_search3;
+            char mail_search3[50];
+            char roomtype_search3[50];
+            int roomnumber_search3;
+            int days_search3;
+            char payment_search3[50];
+            while (fgets(line3, sizeof(line3), fp_search3) != NULL) {
+                sscanf(line3, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search3, address_search3, &number_search3, mail_search3, roomtype_search3, &roomnumber_search3, &days_search3, payment_search3);
+                if (strcmp(mail_search3, search_mail) == 0) {
+                    printf("\nCustomer Name      : %s\n", name_search3);
+                    printf("Customer Address   : %s\n", address_search3);
+                    printf("Customer Phone No  : %lld\n", number_search3);
+                    printf("Customer Email     : %s\n", mail_search3);
+                    printf("Room Type          : %s\n", roomtype_search3);
+                    printf("Room Number        : %d\n", roomnumber_search3);
+                    printf("No. of days stayed : %d\n", days_search3);
+                    printf("Payment Method     : %s\n", payment_search3);
+                }
+            }
+            fclose(fp_search3);
+            break;
+        default:
+            printf("Invalid choice!\n");
+            break;
+    }
+}
+
 void staffPortal() {
     char username[20];
     char password[20];
@@ -603,7 +716,7 @@ void adminPortal() {
         printf("\nWelcome, %s!\n", username);
         printf("\nRoom Status:\n");
         displayRooms_withStatus();
-        printf("\n1. Change the status of any room.\n2. Change Staff Credentials.\n3. Return to Main Menu...\nEnter your choice:");
+        printf("\n1. Change the status of any room.\n2. Change Staff Credentials.\n3. Search For a Customer\n4. Return to Main Menu.\nEnter your choice:");
         int admin_choice;
         scanf("%d", &admin_choice);
         switch (admin_choice) {
@@ -626,6 +739,8 @@ void adminPortal() {
             case 2:
                 staff_credentials();
             case 3:
+                search_customer();
+            case 4:
                 printf("Returning to Main Menu...\n");
             default:
                 printf("Invalid choice! Returning to Main Menu...\n");
