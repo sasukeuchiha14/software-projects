@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <Windows.h>
@@ -434,17 +435,122 @@ void changeRoomStatus(int max_room, Room *rooms_type) {
     }
 }
 
-void adminPortal() {
+void staff_credentials() {
+    int choice;
+    FILE *fp_show;
+    fp_show = fopen("staff_credentials.csv", "r");
+    char username_show[20];
+    char password_show[20];
+    char line[50];
+    printf("\nCurrent Staff Credentials:\n");
+    while (fgets(line, sizeof(line), fp_show) != NULL) {
+        char* username_show = strtok(line, ",");
+        char* password_show = strtok(NULL, ",");
+        printf("Username: %s\n", username_show);
+        printf("Password: %s\n", password_show);
+    }
+    fclose(fp_show);
+
+    printf("\n1. Add a New Credential\n2. Change Credential\n3. Delete Credential\n4. Return to Main Menu...\nEnter your choice: ");
+    scanf("%d", &choice);
+    switch (choice) {
+    case 1:
+        printf("Enter the new username: ");
+        char new_username[20];
+        scanf("%s", new_username);
+        printf("Enter the new password: ");
+        char new_password[20];
+        scanf("%s", new_password);
+        FILE *fp;
+        fp = fopen("staff_credentials.csv", "a");
+        fprintf(fp, "%s,%s\n", new_username, new_password);
+        fclose(fp);
+        printf("New credentials added successfully!\n");
+        break;
+    case 2:
+        printf("Enter the username to change the password: ");
+        char change_username[20];
+        scanf("%s", change_username);
+        printf("Enter the new password: ");
+        char change_password[20];
+        scanf("%s", change_password);
+        FILE *fp2;
+        fp2 = fopen("staff_credentials.csv", "r");
+        FILE *fp3;
+        fp3 = fopen("temp.csv", "w");
+        char username[20];
+        char password[20];
+        while (fscanf(fp2, "%s,%s\n", username, password) != EOF) {
+            if (strcmp(username, change_username) == 0) {
+                fprintf(fp3, "%s,%s\n", change_username, change_password);
+            }
+            else {
+                fprintf(fp3, "%s,%s\n", username, password);
+            }
+        }
+        fclose(fp2);
+        fclose(fp3);
+        remove("staff_credentials.csv");
+        rename("temp.csv", "staff_credentials.csv");
+        printf("Password changed successfully!\n");
+        break;
+    case 3:
+        printf("Enter the username to delete the credentials: ");
+        char delete_username[20];
+        scanf("%s", delete_username);
+        FILE *fp4;
+        fp4 = fopen("staff_credentials.csv", "r");
+        FILE *fp5;
+        fp5 = fopen("temp2.csv", "w");
+        char username2[20];
+        char password2[20];
+        while (fscanf(fp4, "%s,%s\n", username2, password2) != EOF) {
+            if (strcmp(username2, delete_username) != 0) {
+                fprintf(fp5, "%s,%s\n", username2, password2);
+            }
+        }
+        fclose(fp4);
+        fclose(fp5);
+        remove("staff_credentials.csv");
+        rename("temp2.csv", "staff_credentials.csv");
+        printf("Credentials deleted successfully!\n");
+        break;
+    case 4:
+        printf("Returning to Main Menu...\n");
+        break;
+    default:
+        printf("Invalid choice! Returning to Main Menu...\n");
+        break;
+    }
+}
+
+void staffPortal() {
     char username[20];
     char password[20];
 
-    printf("\nADMIN PORTAL\n");
+    printf("\nSTAFF PORTAL\n");
     printf("Enter username: ");
     scanf("%s", username);
     printf("Enter password: ");
     scanf("%s", password);
 
-    if ((strcmp(username, "hardik") == 0 && strcmp(password, "continental7123") == 0) || (strcmp(username, "admin") == 0 && strcmp(password, "admin") == 0)) {
+    FILE *fp_check;
+    fp_check = fopen("staff_credentials.csv", "r+");
+    char username_check[20];
+    char password_check[20];
+    char line[50];
+    int valid_credential = 0;
+    while (fgets(line, sizeof(line), fp_check) != NULL) {
+        char* username_check = strtok(line, ",");
+        char* password_check = strtok(NULL, "\n");
+        if (strcmp(username, username_check) == 0 && strcmp(password, password_check) == 0) {
+            valid_credential = 1;
+            break;
+        }
+    }
+    fclose(fp_check);
+
+    if (valid_credential == 1) {
         printf("\nWelcome, %s!\n", username);
         printf("\nRoom Status:\n");
         displayRooms_withStatus();
@@ -483,6 +589,53 @@ void adminPortal() {
     }
 }
 
+void adminPortal() {
+    char username[20];
+    char password[20];
+
+    printf("\nADMIN PORTAL\n");
+    printf("Enter username: ");
+    scanf("%s", username);
+    printf("Enter password: ");
+    scanf("%s", password);
+
+    if ((strcmp(username, "hardik") == 0 && strcmp(password, "continental7123") == 0) || (strcmp(username, "admin") == 0 && strcmp(password, "admin") == 0)) {
+        printf("\nWelcome, %s!\n", username);
+        printf("\nRoom Status:\n");
+        displayRooms_withStatus();
+        printf("\n1. Change the status of any room.\n2. Change Staff Credentials.\n3. Return to Main Menu...\nEnter your choice:");
+        int admin_choice;
+        scanf("%d", &admin_choice);
+        switch (admin_choice) {
+            case 1:
+                printf("Enter the room type to change the status: ");
+                int roomtype;
+                scanf("%d", &roomtype);
+                if (roomtype == 1) {
+                    changeRoomStatus(MAX_SINGLE_ROOMS, single_rooms);
+                }
+                else if (roomtype == 2) {
+                    changeRoomStatus(MAX_DOUBLE_ROOMS, double_rooms);
+                }
+                else if (roomtype == 3) {
+                    changeRoomStatus(MAX_SUIT_ROOMS, suit_rooms);
+                }
+                else {
+                    printf("Invalid room type!\n");
+                }
+            case 2:
+                staff_credentials();
+            case 3:
+                printf("Returning to Main Menu...\n");
+            default:
+                printf("Invalid choice! Returning to Main Menu...\n");
+            }
+    }
+    else {
+        printf("Invalid credentials! Access denied.\n");
+    }
+}
+
 int main() {
     int choice;
     struct Customer customer;
@@ -490,6 +643,7 @@ int main() {
     initializeRooms();
     char yn[5];
     char* payment_info = malloc(20 * sizeof(char));
+    payment_info = "Invalid";
 
     SetConsoleOutputCP(CP_UTF8);
     printf("\n");
@@ -584,6 +738,9 @@ int main() {
                 }
                 break;
             case 100:
+                staffPortal();
+                break;
+            case 1379:
                 adminPortal();
                 break;
             default:

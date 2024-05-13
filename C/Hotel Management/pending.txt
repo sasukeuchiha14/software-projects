@@ -8,6 +8,8 @@
 
 ✅Admin Portal: Some comands only available to admin
 
+✅Staff Prtal: Some comands only available to admin
+
 ✅User authentication: Implement a login system to secure access to the hotel management system and restrict certain operations to authorized users.
 
 ✅Room status update: Allow hotel staff to update the status of rooms, such as cleaning in progress, under maintenance, or out of service.
