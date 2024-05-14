@@ -63,6 +63,7 @@ struct about_room{
     int type;
     int roomNumber;
     int days;
+    int food;
 }about_room;
 
 char* roomname(int type) {
@@ -129,6 +130,18 @@ bool myRoom(struct about_room *about_room, int MAX, Room *rooms_type) {
         }
         else
         {
+            printf("Do you want to include Breakfast & Dinner? (y/n): ");
+            char yn[5];
+            scanf("%s", yn);
+            if (strcmp(yn, "y") == 0) {
+                about_room->food = 500;
+            }
+            else if (strcmp(yn, "n") == 0) {
+                about_room->food = 0;
+            }
+            else {
+                printf("Invalid choice! Breakfast & Dinner add-on is not added.\n");
+            }
             rooms_type[about_room->roomNumber - 1].isReserved = true;
             printf("Room %d reserved successfully!\n", about_room->roomNumber);
             char status_name[50];
@@ -209,6 +222,7 @@ void gencost(struct about_room about_room, struct Bill *bill){
     else {
         printf("Invalid room type!\n");
     }
+    bill->cost_perday += about_room.food;
     bill->without_gst_cost = bill->cost_perday * about_room.days;
     bill->gst_cost = bill->cost_perday * about_room.days * 1.18;
 }
@@ -220,7 +234,7 @@ void genBill(struct about_room about_room, struct Bill bill, struct Customer cus
     printf("Customer Phone No  : %lld\n", customer.number);
     printf("Customer Email     : %s\n", customer.mail);
     printf("Customer Address   : %s, %s, %s, %s, %s\n", customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
-    printf("Room Type          : %s\n",roomname(about_room.type));
+    printf("Room Type          : %s\n", roomname(about_room.type));
     printf("No. of days stayed : %d\n", about_room.days);
     printf("Room cost per day  : %d\n", bill.cost_perday);
     printf("Cost (without gst) : %.f\n", bill.without_gst_cost);
@@ -434,11 +448,11 @@ void changeRoomStatus(int max_room, Room *rooms_type) {
     if (roomnum > 1 && roomnum <= max_room) {
         rooms_type[roomnum - 1].isReserved = !rooms_type[roomnum - 1].isReserved;
         if (rooms_type[roomnum - 1].isReserved) {
-            printf("Room %d status changed to reserved!\n", roomnum);
+            printf("Room %d status changed to reserved!\nStatus: ", roomnum);
             scanf("%s", rooms_type[roomnum - 1].status);
         }
         else {
-            printf("Room %d status changed to available!\n", roomnum);
+            printf("Room %d status changed to available!\nStatus: ", roomnum);
             strcpy(rooms_type[roomnum - 1].status, "Room is Available now!");
         }
     }
@@ -714,14 +728,14 @@ void adminPortal() {
 
     if ((strcmp(username, "hardik") == 0 && strcmp(password, "continental7123") == 0) || (strcmp(username, "admin") == 0 && strcmp(password, "admin") == 0)) {
         printf("\nWelcome, %s!\n", username);
-        printf("\nRoom Status:\n");
-        displayRooms_withStatus();
-        printf("\n1. Change the status of any room.\n2. Change Staff Credentials.\n3. Search For a Customer\n4. Return to Main Menu.\nEnter your choice:");
+        printf("\n1. Change the status of a room.\n2. Change Staff Credentials.\n3. Search For a Customer\n4. Return to Main Menu.\nEnter your choice:");
         int admin_choice;
         scanf("%d", &admin_choice);
         switch (admin_choice) {
             case 1:
-                printf("Enter the room type to change the status: ");
+                printf("\nRoom Status:\n");
+                displayRooms_withStatus();
+                printf("\nEnter the room type to change the status: ");
                 int roomtype;
                 scanf("%d", &roomtype);
                 if (roomtype == 1) {
@@ -736,14 +750,19 @@ void adminPortal() {
                 else {
                     printf("Invalid room type!\n");
                 }
+                break;
             case 2:
                 staff_credentials();
+                break;
             case 3:
                 search_customer();
+                break;
             case 4:
                 printf("Returning to Main Menu...\n");
+                break;
             default:
                 printf("Invalid choice! Returning to Main Menu...\n");
+                break;
             }
     }
     else {
@@ -852,10 +871,10 @@ int main() {
                     printf("Invalid choice! Returning to Main Menu...\n");
                 }
                 break;
-            case 100:
+            case 99:
                 staffPortal();
                 break;
-            case 1379:
+            case 100:
                 adminPortal();
                 break;
             default:
