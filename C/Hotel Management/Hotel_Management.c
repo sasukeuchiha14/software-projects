@@ -8,7 +8,6 @@
 #define MAX_DOUBLE_ROOMS 10
 #define MAX_SUIT_ROOMS 5
 
-
 struct Customer {
     char name[50];
     int age;
@@ -461,6 +460,216 @@ void changeRoomStatus(int max_room, Room *rooms_type) {
     }
 }
 
+void employee_credentials() {
+    printf("\nFilter details according to which condition?\n1. ID\n2. Education\n3. JoiningYear\n4. City\n5. PaymentTier\n6. Age\n7. Experience\nEnter your choice:");
+    int emp_choice;
+    scanf("%d", &emp_choice);
+    char line[256];
+    int id;
+    char education[20];
+    int joiningyear;
+    char city[50];
+    int paymenttier;
+    int age;
+    char gender[10];
+    int experience;
+    int count = 0;
+    switch (emp_choice) {
+        case 1:
+            printf("The ID to display: ");
+            int emp_id;
+            scanf("%d", &emp_id);
+            if (emp_id < 1 || emp_id > 4653) {
+                printf("Invalid ID! Returning to Main Menu...\n");
+            }
+            else {
+                FILE *fp_id;
+                fp_id = fopen("Employee_Details.csv", "r");
+                printf("Employee ID\tEducation\tJoining Year\tCity\tPayment Tier\tAge\tGender\tExperience\n");
+                while (fgets(line, sizeof(line), fp_id) != NULL) {
+                    sscanf(line, "%d,%[^,],%d,%[^,],%d,%d,%[^,],%d\n", &id, education, &joiningyear, city, &paymenttier, &age, gender, &experience);
+                    if (id == emp_id) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                    }
+                }
+                fclose(fp_id);
+            }
+            break;
+        case 2:
+            printf("The Education to filter: \n1. Bachelors\n2. Masters\n3. PHD\nEnter your choice: ");
+            int emp_edu;
+            scanf("%d", &emp_edu);
+            if (emp_edu < 1 || emp_edu > 3) {
+                printf("Invalid Education! Returning to Main Menu...\n");
+            }
+            else {
+                FILE *fp_edu;
+                fp_edu = fopen("Employee_Details.csv", "r");
+                count = 0;
+                printf("Employee ID\tEducation\tJoining Year\tCity\tPayment Tier\tAge\tGender\tExperience\n");
+                while (fgets(line, sizeof(line), fp_edu) != NULL) {
+                    sscanf(line, "%d,%[^,],%d,%[^,],%d,%d,%[^,],%d\n", &id, education, &joiningyear, city, &paymenttier, &age, gender, &experience);
+                    if (emp_edu == 1 && strcmp(education, "Bachelors") == 0) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                        count++;
+                    }
+                    else if (emp_edu == 2 && strcmp(education, "Masters") == 0) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                        count++;
+                    }
+                    else if (emp_edu == 3 && strcmp(education, "PHD") == 0) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                        count++;
+                    }
+                }
+                if (count == 0) {
+                    printf("\nNo employees found with the given education!\n");
+                }
+                else {
+                    printf("\nTotal employees with the given education: %d\n", count);
+                }
+                fclose(fp_edu);
+            }
+            break;
+        case 3:
+            printf("The Joining Year to filter: ");
+            int emp_joiningyear;
+            scanf("%d", emp_joiningyear);
+            FILE *fp_joiningyear;
+            fp_joiningyear = fopen("Employee_Details.csv", "r");
+            count = 0;
+            printf("Employee ID\tEducation\tJoining Year\tCity\tPayment Tier\tAge\tGender\tExperience\n");
+            while (fgets(line, sizeof(line), fp_joiningyear) != NULL) {
+                sscanf(line, "%d,%[^,],%d,%[^,],%d,%d,%[^,],%d\n", &id, education, &joiningyear, city, &paymenttier, &age, gender, &experience);
+                if (emp_joiningyear == joiningyear) {
+                    printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                    count++;
+                }
+            }
+            if (count == 0) {
+                printf("\nNo employees found with the given joining year!\n");
+            }
+            else {
+                printf("\nTotal employees with the given joining year: %d\n", count);
+            }
+            fclose(fp_joiningyear);
+            break;
+        case 4:
+            printf("The City to filter: \n1. Bangalore\n2. New Delhi\n3. Pune\nEnter your choice: ");
+            int emp_city;
+            scanf("%d", &emp_city);
+            if (emp_city < 1 || emp_city > 3) {
+                printf("Invalid City! Returning to Main Menu...\n");
+            }
+            else {
+                FILE *fp_city;
+                fp_city = fopen("Employee_Details.csv", "r");
+                count = 0;
+                printf("Employee ID\tEducation\tJoining Year\tCity\tPayment Tier\tAge\tGender\tExperience\n");
+                while (fgets(line, sizeof(line), fp_city) != NULL) {
+                    sscanf(line, "%d,%[^,],%d,%[^,],%d,%d,%[^,],%d\n", &id, education, &joiningyear, city, &paymenttier, &age, gender, &experience);
+                    if (emp_city == 1 && strcmp(city, "Bangalore") == 0) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                        count++;
+                    }
+                    else if (emp_city == 2 && strcmp(city, "New Delhi") == 0) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                        count++;
+                    }
+                    else if (emp_city == 3 && strcmp(city, "Pune") == 0) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                        count++;
+                    }
+                }
+                if (count == 0) {
+                    printf("\nNo employees found in the given city!\n");
+                }
+                else {
+                    printf("\nTotal employees in the given city: %d\n", count);
+                }
+                fclose(fp_city);
+            }
+            break;
+        case 5:
+            printf("The Payment Tier to filter: \n1. Tier 1\n2. Tier 2\n3. Tier 3\nEnter your choice: ");
+            int emp_paymenttier;
+            scanf("%d", &emp_paymenttier);
+            if (emp_paymenttier < 1 || emp_paymenttier > 3) {
+                printf("Invalid Payment Tier! Returning to Main Menu...\n");
+            }
+            else {
+                FILE *fp_paymenttier;
+                fp_paymenttier = fopen("Employee_Details.csv", "r");
+                count = 0;
+                printf("Employee ID\tEducation\tJoining Year\tCity\tPayment Tier\tAge\tGender\tExperience\n");
+                while (fgets(line, sizeof(line), fp_paymenttier) != NULL) {
+                    sscanf(line, "%d,%[^,],%d,%[^,],%d,%d,%[^,],%d\n", &id, education, &joiningyear, city, &paymenttier, &age, gender, &experience);
+                    if (emp_paymenttier == paymenttier) {
+                        printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                        count++;
+                    }
+                }
+                if (count == 0) {
+                    printf("\nNo employees found in the given payment tier!\n");
+                }
+                else {
+                    printf("\nTotal employees in the given payment tier: %d\n", count);
+                }
+                fclose(fp_paymenttier);
+            }
+            break;
+        case 6:
+            printf("The Age to filter: ");
+            int emp_age;
+            scanf("%d", emp_age);
+            FILE *fp_age;
+            fp_age = fopen("Employee_Details.csv", "r");
+            count = 0;
+            printf("Employee ID\tEducation\tJoining Year\tCity\tPayment Tier\tAge\tGender\tExperience\n");
+            while (fgets(line, sizeof(line), fp_age) != NULL) {
+                sscanf(line, "%d,%[^,],%d,%[^,],%d,%d,%[^,],%d\n", &id, education, &joiningyear, city, &paymenttier, &age, gender, &experience);
+                if (emp_age == age) {
+                    printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                    count++;
+                }
+            }
+            if (count == 0) {
+                printf("\nNo employees found with the given age!\n");
+            }
+            else {
+                printf("\nTotal employees with the given age: %d\n", count);
+            }
+            fclose(fp_age);
+            break;
+        case 7:
+            printf("The Experience to filter: ");
+            int emp_experience;
+            scanf("%d", emp_experience);
+            FILE *fp_experience;
+            fp_experience = fopen("Employee_Details.csv", "r");
+            count = 0;
+            printf("Employee ID\tEducation\tJoining Year\tCity\tPayment Tier\tAge\tGender\tExperience\n");
+            while (fgets(line, sizeof(line), fp_experience) != NULL) {
+                sscanf(line, "%d,%[^,],%d,%[^,],%d,%d,%[^,],%d\n", &id, education, &joiningyear, city, &paymenttier, &age, gender, &experience);
+                if (emp_experience == experience) {
+                    printf("%d\t%s\t%d\t%s\t%d\t%d\t%s\t%d\n", id, education, joiningyear, city, paymenttier, age, gender, experience);
+                    count++;
+                }
+            }
+            if (count == 0) {
+                printf("\nNo employees found with the given experience!\n");
+            }
+            else {
+                printf("\nTotal employees with the given experience: %d\n", count);
+            }
+            fclose(fp_experience);
+            break;
+        default:
+            printf("Invalid choice! Returning to Main Menu...\n");
+            break;
+    }
+};
+
 void staff_credentials() {
     int choice;
     FILE *fp_show;
@@ -728,7 +937,7 @@ void adminPortal() {
 
     if ((strcmp(username, "hardik") == 0 && strcmp(password, "continental7123") == 0) || (strcmp(username, "admin") == 0 && strcmp(password, "admin") == 0)) {
         printf("\nWelcome, %s!\n", username);
-        printf("\n1. Change the status of a room.\n2. Change Staff Credentials.\n3. Search For a Customer\n4. Return to Main Menu.\nEnter your choice:");
+        printf("\n1. Change the status of a room\n2. Employees Credentials\n3. Staff Credentials\n4. Search For a Customer\n5. Return to Main Menu.\nEnter your choice:");
         int admin_choice;
         scanf("%d", &admin_choice);
         switch (admin_choice) {
@@ -752,12 +961,15 @@ void adminPortal() {
                 }
                 break;
             case 2:
-                staff_credentials();
+                employee_credentials();
                 break;
             case 3:
-                search_customer();
+                staff_credentials();
                 break;
             case 4:
+                search_customer();
+                break;
+            case 5:
                 printf("Returning to Main Menu...\n");
                 break;
             default:
