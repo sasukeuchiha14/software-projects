@@ -56,6 +56,7 @@ nav{
     padding-top: 0.375rem;
     border-radius: 5px;
     margin: 10px;
+    cursor: pointer;
 }
 
 #nav_right > button{
@@ -109,8 +110,8 @@ img:hover{
 .input > input{
     background-color: rgba(4, 4, 4, 0.3);
     color: rgba(255, 255, 255, 0.7);
-    min-width: 200px;
     width: 20vw;
+    min-width: 200px;
     height: 20px;
     border: 1px solid rgba(255, 255, 255, 0.7);
     padding-left: 2.25rem;
@@ -227,12 +228,29 @@ section .text *{
     margin-bottom: 2vh;
 }
 
+.faq_box:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
 .faq_box{
     background-color: rgba(255, 255, 255, 0.154);
     width: 70vw;
-    padding: 1.5rem;
     margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.5s ease-in-out;
+}
+
+.faq_box > p{
     font-size: 1.5rem;
+    margin: 1.25rem;
+}
+
+.faq_box > img{
+    width: 30px;
+    height: 30px;
+    margin: auto 1rem;
 }
 
 .faq h3{
@@ -266,6 +284,11 @@ section .text *{
     font-weight: 400;
     color: rgba(255,255,255,0.7);
     align-self: center;
+    cursor: pointer;
+}
+
+.item:hover{
+    color: white;
 }
 
 .item17 > select{
@@ -277,6 +300,7 @@ section .text *{
     padding-bottom: 0.375rem;
     padding-top: 0.375rem;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .region{
@@ -293,6 +317,20 @@ section .text *{
     .content > h4{
         font-size: 1.25rem;
         font-weight: 400;
+    }
+
+    .input > input{
+        height: 10px;
+        width: 50vw;
+        max-width: 100px;
+        margin: 5px;
+    }
+
+    .input > button{
+        font-size: 1rem;
+        padding: 5px 10px;
+        min-height: 47px;
+        margin: 5px;
     }
 
     section{
