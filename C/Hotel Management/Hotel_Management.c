@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <Windows.h>
+#include <time.h>
 
 #define MAX_SINGLE_ROOMS 20
 #define MAX_DOUBLE_ROOMS 10
@@ -129,11 +130,12 @@ bool myRoom(struct about_room *about_room, int MAX, Room *rooms_type) {
         }
         else
         {
-            printf("Do you want to include Breakfast & Dinner? (y/n): ");
+            printf("Do you want to include Breakfast & Dinner (500 per Day)? (y/n): ");
             char yn[5];
             scanf("%s", yn);
             if (strcmp(yn, "y") == 0) {
                 about_room->food = 500;
+                printf("Breakfast & Dinner add-on added!\n");
             }
             else if (strcmp(yn, "n") == 0) {
                 about_room->food = 0;
@@ -223,7 +225,13 @@ void gencost(struct about_room about_room, struct Bill *bill){
     }
     bill->cost_perday += about_room.food;
     bill->without_gst_cost = bill->cost_perday * about_room.days;
-    bill->gst_cost = bill->cost_perday * about_room.days * 1.18;
+    if (bill->without_gst_cost > 7500) {
+        bill->gst_cost = bill->cost_perday * about_room.days * 1.18;
+    }
+    else {
+        bill->gst_cost = bill->cost_perday * about_room.days * 1.12;
+        printf("(GST 12%% added becz of total bill less than 7500!)\n");
+    }
 }
 
 void genBill(struct about_room about_room, struct Bill bill, struct Customer customer) {
@@ -384,10 +392,13 @@ void take_feedback() {
     if (strcmp(yn2, "y") == 0) {
         FILE *fp;
         fp = fopen("Feedback.txt", "a");
+        int star;
         char feedback[100];
+        printf("Rate our service out of 5 stars: ");
+        scanf("%d", &star);
         printf("Please provide your feedback in Single Line: ");
         scanf(" %[^\n]%*c", feedback);
-        fprintf(fp, "%s\n\n", feedback);
+        fprintf(fp, "%d,%s\n", star, feedback);
         fclose(fp);
         printf("\n");
         printf("Thank you for your feedback!\n");
@@ -549,6 +560,17 @@ void staff_credentials() {
     }
 }
 
+void displayCustomerInfo_withRoomDetails(char* name_search, char* address_search, long long int number_search, char* mail_search, char* roomtype_search, int roomnumber_search, int days_search, char* payment_search) {
+    printf("\nCustomer Name      : %s\n", name_search);
+    printf("Customer Address   : %s\n", address_search);
+    printf("Customer Phone No  : %lld\n", number_search);
+    printf("Customer Email     : %s\n", mail_search);
+    printf("Room Type          : %s\n", roomtype_search);
+    printf("Room Number        : %d\n", roomnumber_search);
+    printf("No. of days stayed : %d\n", days_search);
+    printf("Payment Method     : %s\n", payment_search);
+}
+
 void search_customer() {
     printf("How you wanna search ?\n1. By Name\n2. By Phone Number\n3. By Email\nEnter your choice: ");
     int search_choice;
@@ -572,14 +594,7 @@ void search_customer() {
             while (fgets(line, sizeof(line), fp_search) != NULL) {
                 sscanf(line, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search, address_search, &number_search, mail_search, roomtype_search, &roomnumber_search, &days_search, payment_search);
                 if (strcmp(name_search, search_name) == 0) {
-                    printf("\nCustomer Name      : %s\n", name_search);
-                    printf("Customer Address   : %s\n", address_search);
-                    printf("Customer Phone No  : %lld\n", number_search);
-                    printf("Customer Email     : %s\n", mail_search);
-                    printf("Room Type          : %s\n", roomtype_search);
-                    printf("Room Number        : %d\n", roomnumber_search);
-                    printf("No. of days stayed : %d\n", days_search);
-                    printf("Payment Method     : %s\n", payment_search);
+                    displayCustomerInfo_withRoomDetails(name_search, address_search, number_search, mail_search, roomtype_search, roomnumber_search, days_search, payment_search);
                 }
             }
             fclose(fp_search);
@@ -602,14 +617,7 @@ void search_customer() {
             while (fgets(line2, sizeof(line2), fp_search2) != NULL) {
                 sscanf(line2, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search2, address_search2, &number_search2, mail_search2, roomtype_search2, &roomnumber_search2, &days_search2, payment_search2);
                 if (number_search2 == search_number) {
-                    printf("\nCustomer Name      : %s\n", name_search2);
-                    printf("Customer Address   : %s\n", address_search2);
-                    printf("Customer Phone No  : %lld\n", number_search2);
-                    printf("Customer Email     : %s\n", mail_search2);
-                    printf("Room Type          : %s\n", roomtype_search2);
-                    printf("Room Number        : %d\n", roomnumber_search2);
-                    printf("No. of days stayed : %d\n", days_search2);
-                    printf("Payment Method     : %s\n", payment_search2);
+                    displayCustomerInfo_withRoomDetails(name_search2, address_search2, number_search2, mail_search2, roomtype_search2, roomnumber_search2, days_search2, payment_search2);
                 }
             }
             fclose(fp_search2);
@@ -632,14 +640,7 @@ void search_customer() {
             while (fgets(line3, sizeof(line3), fp_search3) != NULL) {
                 sscanf(line3, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search3, address_search3, &number_search3, mail_search3, roomtype_search3, &roomnumber_search3, &days_search3, payment_search3);
                 if (strcmp(mail_search3, search_mail) == 0) {
-                    printf("\nCustomer Name      : %s\n", name_search3);
-                    printf("Customer Address   : %s\n", address_search3);
-                    printf("Customer Phone No  : %lld\n", number_search3);
-                    printf("Customer Email     : %s\n", mail_search3);
-                    printf("Room Type          : %s\n", roomtype_search3);
-                    printf("Room Number        : %d\n", roomnumber_search3);
-                    printf("No. of days stayed : %d\n", days_search3);
-                    printf("Payment Method     : %s\n", payment_search3);
+                    displayCustomerInfo_withRoomDetails(name_search3, address_search3, number_search3, mail_search3, roomtype_search3, roomnumber_search3, days_search3, payment_search3);
                 }
             }
             fclose(fp_search3);
@@ -648,6 +649,24 @@ void search_customer() {
             printf("Invalid choice!\n");
             break;
     }
+}
+
+void feedback_report() {
+    FILE *fp_feedback;
+    fp_feedback = fopen("Feedback.txt", "r");
+    char line[256];
+    int star;
+    char feedback[100];
+    int total_stars = 0,total_feedbacks = 0;
+    printf("\nFeedback Report:\n");
+    while (fgets(line, sizeof(line), fp_feedback) != NULL) {
+        sscanf(line, "%d,%[^\n]\n", &star, feedback);
+        total_stars += star;
+        total_feedbacks++;
+        printf("Feedback%d: %s (%d Stars)\n", total_feedbacks, feedback, star);
+    }
+    printf("\nAverage Rating: %.2f stars\n", (float)total_stars / total_feedbacks);
+    fclose(fp_feedback);
 }
 
 void staffPortal() {
@@ -727,7 +746,7 @@ void adminPortal() {
 
     if ((strcmp(username, "hardik") == 0 && strcmp(password, "continental7123") == 0) || (strcmp(username, "admin") == 0 && strcmp(password, "admin") == 0)) {
         printf("\nWelcome, %s!\n", username);
-        printf("\n1. Change the status of a room\n2. Staff Credentials\n3. Search For a Customer\n4. Return to Main Menu.\nEnter your choice:");
+        printf("\n1. Change the status of a room\n2. Staff Credentials\n3. Search For a Customer\n4. Feedback Status\n5. Return to Main Menu.\nEnter your choice:");
         int admin_choice;
         scanf("%d", &admin_choice);
         switch (admin_choice) {
@@ -757,6 +776,9 @@ void adminPortal() {
                 search_customer();
                 break;
             case 4:
+                feedback_report();
+                break;
+            case 5:
                 printf("Returning to Main Menu...\n");
                 break;
             default:
@@ -799,7 +821,7 @@ int main() {
 
     while (true) {
 
-        printf("\nMenu:\n1. Customer info\n2. Display available rooms\n3. Reserve a room\n4. Cancel Reservation\n5. Generate Bill\n6. Payment\n7. Exit\n99. Staff Portal\n100. Admin Portal\n\nEnter your choice: ");
+        printf("\nMenu:\n1. Customer Information\n2. Display Available Rooms\n3. Reserve a Room\n4. Cancel Reservation\n5. Generate Bill\n6. Make Payment\n7. Exit\n\nEnter your choice: ");
 
         if (scanf("%d", &choice) != 1) {
             printf("Invalid choice! Please try again.\n");
@@ -835,7 +857,7 @@ int main() {
                 displayRooms();
                 break;
             case 3:
-                printf("Room types available: \n1. Single Room\n2. Double Room\n3. Suit Room\nEnter your choice: ");
+                printf("Room types available: \n1. Single Room (1500 per Day)\n2. Double Room (2500 per Day)\n3. Suit Room (5000 per Day)\nEnter your choice: ");
                 scanf("%d", &about_room.type);
                 printf("Enter the room number to reserve: ");
                 scanf("%d", &about_room.roomNumber);
