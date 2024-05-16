@@ -564,28 +564,26 @@ void staff_credentials() {
     }
 }
 
-void displayCustomerInfo_withRoomDetails(char* name_search, char* address_search, long long int number_search, char* mail_search, char* roomtype_search, int roomnumber_search, int days_search, char* payment_search) {
-    printf("\nCustomer Name      : %s\n", name_search);
-    printf("Customer Address   : %s\n", address_search);
-    printf("Customer Phone No  : %lld\n", number_search);
-    printf("Customer Email     : %s\n", mail_search);
-    printf("Room Type          : %s\n", roomtype_search);
-    printf("Room Number        : %d\n", roomnumber_search);
-    printf("No. of days stayed : %d\n", days_search);
-    printf("Payment Method     : %s\n", payment_search);
+void displayCustomerInfo_withRoomDetails(char* name, char* address, long long int number, char* mail, char* roomtype, int roomnumber, int days, char* payment, int day, int month, int year) {
+    printf("\nCustomer Name      : %s\n", name);
+    printf("Customer Address   : %s\n", address);
+    printf("Customer Phone No  : %lld\n", number);
+    printf("Customer Email     : %s\n", mail);
+    printf("Room Type          : %s\n", roomtype);
+    printf("Room Number        : %d\n", roomnumber);
+    printf("No. of days stayed : %d\n", days);
+    printf("Payment Method     : %s\n", payment);
+    printf("Booking Date       : %d/%d/%d\n", day, month, year);
 }
 
 void customerList_sort() {
     FILE *fp_sort;
     fp_sort = fopen("Booking_History.csv", "r");
     char line[256];
-    char name_sort[50];
-    char address_sort[100];
+    char name_sort[50], address_sort[100];
     long long int number_sort;
-    char mail_sort[50];
-    char roomtype_sort[50];
-    int roomnumber_sort;
-    int days_sort;
+    char mail_sort[50], roomtype_sort[50];
+    int roomnumber_sort, days_stayed_sort;
     char payment_sort[50];
     char line1[256];
     fgets(line1, sizeof(line), fp_sort);
@@ -597,18 +595,18 @@ void customerList_sort() {
     }
     fclose(fp_sort);
     for (int i = 0; i < count - 1; i++) {
-        for (int j = 0; j < count - i - 1; j++) {
-            sscanf(lines[j], "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_sort, address_sort, &number_sort, mail_sort, roomtype_sort, &roomnumber_sort, &days_sort, payment_sort);
-            long long int number_sort_next;
-            sscanf(lines[j + 1], "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_sort, address_sort, &number_sort_next, mail_sort, roomtype_sort, &roomnumber_sort, &days_sort, payment_sort);
-            if (!(number_sort < number_sort_next)) {
-                char temp[256];
-                strcpy(temp, lines[j]);
-                strcpy(lines[j], lines[j + 1]);
-                strcpy(lines[j + 1], temp);
-            }
+    for (int j = 0; j < count - i - 1; j++) {
+        int day_sort, month_sort, year_sort, day_sort_next, month_sort_next, year_sort_next;
+        sscanf(lines[j], "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_sort, address_sort, &number_sort, mail_sort, roomtype_sort, &roomnumber_sort, &days_stayed_sort, payment_sort, &day_sort, &month_sort, &year_sort);
+        sscanf(lines[j + 1], "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_sort, address_sort, &number_sort, mail_sort, roomtype_sort, &roomnumber_sort, &days_stayed_sort, payment_sort, &day_sort_next, &month_sort_next, &year_sort_next);
+        if (year_sort < year_sort_next || (year_sort == year_sort_next && month_sort < month_sort_next) || (year_sort == year_sort_next && month_sort == month_sort_next && day_sort < day_sort_next)) {
+            char temp[256];
+            strcpy(temp, lines[j]);
+            strcpy(lines[j], lines[j + 1]);
+            strcpy(lines[j + 1], temp);
         }
     }
+}
     fp_sort = fopen("Booking_History.csv", "w");
     fprintf(fp_sort, "%s", line1);
     for (int i = 0; i < count; i++) {
@@ -630,18 +628,13 @@ void search_customer(struct about_room about_room) {
             FILE *fp_search;
             fp_search = fopen("Booking_History.csv", "r");
             char line[256];
-            char name_search[50];
-            char address_search[50];
+            char name_search[50], address_search[50], mail_search[50], roomtype_search[50], payment_search[50];
             long long int number_search;
-            char mail_search[50];
-            char roomtype_search[50];
-            int roomnumber_search;
-            int days_search;
-            char payment_search[50];
+            int roomnumber_search, days_stayed_search, day_search, month_search, year_search;
             while (fgets(line, sizeof(line), fp_search) != NULL) {
-                sscanf(line, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search, address_search, &number_search, mail_search, roomtype_search, &roomnumber_search, &days_search, payment_search);
+                sscanf(line, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_search, address_search, &number_search, mail_search, roomtype_search, &roomnumber_search, &days_stayed_search, payment_search, &day_search, &month_search, &year_search);
                 if (strcmp(name_search, search_name) == 0) {
-                    displayCustomerInfo_withRoomDetails(name_search, address_search, number_search, mail_search, roomtype_search, roomnumber_search, days_search, payment_search);
+                    displayCustomerInfo_withRoomDetails(name_search, address_search, number_search, mail_search, roomtype_search, roomnumber_search, days_stayed_search, payment_search, day_search, month_search, year_search);
                 }
             }
             fclose(fp_search);
@@ -653,18 +646,13 @@ void search_customer(struct about_room about_room) {
             FILE *fp_search2;
             fp_search2 = fopen("Booking_History.csv", "r");
             char line2[256];
-            char name_search2[50];
-            char address_search2[50];
+            char name_search2[50], address_search2[50], mail_search2[50], roomtype_search2[50], payment_search2[50];
             long long int number_search2;
-            char mail_search2[50];
-            char roomtype_search2[50];
-            int roomnumber_search2;
-            int days_search2;
-            char payment_search2[50];
+            int roomnumber_search2, days_stayed_search2, day_search2, month_search2, year_search2;
             while (fgets(line2, sizeof(line2), fp_search2) != NULL) {
-                sscanf(line2, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search2, address_search2, &number_search2, mail_search2, roomtype_search2, &roomnumber_search2, &days_search2, payment_search2);
+                sscanf(line2, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_search2, address_search2, &number_search2, mail_search2, roomtype_search2, &roomnumber_search2, &days_stayed_search2, payment_search2, &day_search2, &month_search2, &year_search2);
                 if (number_search2 == search_number) {
-                    displayCustomerInfo_withRoomDetails(name_search2, address_search2, number_search2, mail_search2, roomtype_search2, roomnumber_search2, days_search2, payment_search2);
+                    displayCustomerInfo_withRoomDetails(name_search2, address_search2, number_search2, mail_search2, roomtype_search2, roomnumber_search2, days_stayed_search2, payment_search2, day_search2, month_search2, year_search2);
                 }
             }
             fclose(fp_search2);
@@ -676,18 +664,13 @@ void search_customer(struct about_room about_room) {
             FILE *fp_search3;
             fp_search3 = fopen("Booking_History.csv", "r");
             char line3[256];
-            char name_search3[50];
-            char address_search3[50];
+            char name_search3[50], address_search3[50], mail_search3[50], roomtype_search3[50], payment_search3[50];
             long long int number_search3;
-            char mail_search3[50];
-            char roomtype_search3[50];
-            int roomnumber_search3;
-            int days_search3;
-            char payment_search3[50];
+            int roomnumber_search3, days_stayed_search3, day_search3, month_search3, year_search3;
             while (fgets(line3, sizeof(line3), fp_search3) != NULL) {
-                sscanf(line3, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_search3, address_search3, &number_search3, mail_search3, roomtype_search3, &roomnumber_search3, &days_search3, payment_search3);
+                sscanf(line3, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_search3, address_search3, &number_search3, mail_search3, roomtype_search3, &roomnumber_search3, &days_stayed_search3, payment_search3, &day_search3, &month_search3, &year_search3);
                 if (strcmp(mail_search3, search_mail) == 0) {
-                    displayCustomerInfo_withRoomDetails(name_search3, address_search3, number_search3, mail_search3, roomtype_search3, roomnumber_search3, days_search3, payment_search3);
+                    displayCustomerInfo_withRoomDetails(name_search3, address_search3, number_search3, mail_search3, roomtype_search3, roomnumber_search3, days_stayed_search3, payment_search3, day_search3, month_search3, year_search3);
                 }
             }
             fclose(fp_search3);
@@ -703,37 +686,32 @@ void search_customer(struct about_room about_room) {
             FILE *fp_search4;
             fp_search4 = fopen("Booking_History.csv", "r");
             char line4[256];
-            char name_search4[50];
-            char address_search4[50];
+            char name_search4[50], address_search4[50], mail_search4[50], roomtype_search4[50], payment_search4[50];
             long long int number_search4;
-            char mail_search4[50];
-            char roomtype_search4[50];
-            int roomnumber_search4;
-            int days_search4;
-            char payment_search4[50];
+            int roomnumber_search4, days_stayed_search4;
             int start_date4, start_month4, start_year4;
             while (fgets(line4, sizeof(line4), fp_search4) != NULL) {
-                sscanf(line4, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_search4, address_search4, &number_search4, mail_search4, roomtype_search4, &roomnumber_search4, &days_search4, payment_search4, &start_date4, &start_month4, &start_year4);
+                sscanf(line4, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_search4, address_search4, &number_search4, mail_search4, roomtype_search4, &roomnumber_search4, &days_stayed_search4, payment_search4, &start_date4, &start_month4, &start_year4);
                 if (start_year4 >= start_year && start_year4 <= end_year) {
                     if (start_year4 == start_year == end_year) {
                         if (start_month4 >= start_month && start_month4 <= end_month) {
                             if (start_month4 == start_month == end_month) {
                                 if (start_date4 >= start_date && start_date4 <= end_date) {
-                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                                 }
                             }
                             else if (start_month4 == start_month) {
                                 if (start_date4 >= start_date) {
-                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                                 }
                             }
                             else if (start_month4 == end_month) {
                                 if (start_date4 <= end_date) {
-                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                                 }
                             }
                             else {
-                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                             }
                         }
                     }
@@ -741,11 +719,11 @@ void search_customer(struct about_room about_room) {
                         if (start_month4 >= start_month) {
                             if (start_month4 == start_month) {
                                 if (start_date4 >= start_date) {
-                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                                 }
                             }
                             else {
-                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                             }
                         }
                     }
@@ -753,16 +731,16 @@ void search_customer(struct about_room about_room) {
                         if (start_month4 <= end_month) {
                             if (start_month4 == end_month) {
                                 if (start_date4 <= end_date) {
-                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                                 }
                             }
                             else {
-                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                             }
                         }
                     }
                     else {
-                        displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                        displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_stayed_search4, payment_search4, start_date4, start_month4, start_year4);
                     }
                 }
             }
