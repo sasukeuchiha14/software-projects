@@ -62,7 +62,7 @@ void initializeRooms() {
 struct about_room{
     int type;
     int roomNumber;
-    int days;
+    int days, start_date, start_month, start_year;
     int food;
 }about_room;
 
@@ -104,7 +104,7 @@ void displayRooms() {
     printf("\n");
 }
 
-bool myRoom(struct about_room *about_room, int MAX, Room *rooms_type) {
+bool myRoom(struct about_room *about_room, int MAX, Room *rooms_type, int st_day, int st_month, int st_year) {
     if (about_room->roomNumber < 1 || about_room->roomNumber > MAX) {
         printf("Invalid room number!\n");
         return false;
@@ -148,20 +148,23 @@ bool myRoom(struct about_room *about_room, int MAX, Room *rooms_type) {
             char status_name[50];
             sprintf(status_name, "Reserved by Customer for %d days!", about_room->days);
             strcpy(rooms_type[about_room->roomNumber - 1].status, status_name);
+            about_room->start_date = st_day;
+            about_room->start_month = st_month;
+            about_room->start_year = st_year;
             return true;
         }
     }
 }
 
-bool reserveRoom(struct about_room *about_room) {
+bool reserveRoom(struct about_room *about_room, int st_day, int st_month, int st_year) {
     if (about_room->type == 1) {
-        return myRoom(about_room, MAX_SINGLE_ROOMS, single_rooms);
+        return myRoom(about_room, MAX_SINGLE_ROOMS, single_rooms, st_day, st_month, st_year);
     }
     else if (about_room->type == 2) {
-        return myRoom(about_room, MAX_DOUBLE_ROOMS, double_rooms);
+        return myRoom(about_room, MAX_DOUBLE_ROOMS, double_rooms, st_day, st_month, st_year);
     }
     else if (about_room->type == 3) {
-        return myRoom(about_room, MAX_SUIT_ROOMS, suit_rooms);
+        return myRoom(about_room, MAX_SUIT_ROOMS, suit_rooms, st_day, st_month, st_year);
     }
     else {
         printf("Invalid room type!\n");
@@ -381,7 +384,8 @@ void booking_history(struct Customer customer, struct about_room about_room, str
     fprintf(fp, "%s%s%s%s%s,",customer.address.house_appartment, customer.address.street, customer.address.city, customer.address.state, customer.address.pincode);
     fprintf(fp, "%lld,%s,",customer.number,customer.mail);
     fprintf(fp, "%s,%d,%d,",roomname(about_room.type),about_room.roomNumber,about_room.days);
-    fprintf(fp, "%s\n",payment_info);
+    fprintf(fp, "%s",payment_info);
+    fprintf(fp, "%d,%d,%d,",about_room.start_date,about_room.start_month,about_room.start_year);
     fclose(fp);
 }
 
@@ -571,8 +575,51 @@ void displayCustomerInfo_withRoomDetails(char* name_search, char* address_search
     printf("Payment Method     : %s\n", payment_search);
 }
 
-void search_customer() {
-    printf("How you wanna search ?\n1. By Name\n2. By Phone Number\n3. By Email\nEnter your choice: ");
+void customerList_sort() {
+    FILE *fp_sort;
+    fp_sort = fopen("Booking_History.csv", "r");
+    char line[256];
+    char name_sort[50];
+    char address_sort[100];
+    long long int number_sort;
+    char mail_sort[50];
+    char roomtype_sort[50];
+    int roomnumber_sort;
+    int days_sort;
+    char payment_sort[50];
+    char line1[256];
+    fgets(line1, sizeof(line), fp_sort);
+    char lines[50][256];
+    int count = 0;
+    while (fgets(line, sizeof(line), fp_sort) != NULL) {
+        strcpy(lines[count], line);
+        count++;
+    }
+    fclose(fp_sort);
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            sscanf(lines[j], "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_sort, address_sort, &number_sort, mail_sort, roomtype_sort, &roomnumber_sort, &days_sort, payment_sort);
+            long long int number_sort_next;
+            sscanf(lines[j + 1], "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,]\n", name_sort, address_sort, &number_sort_next, mail_sort, roomtype_sort, &roomnumber_sort, &days_sort, payment_sort);
+            if (!(number_sort < number_sort_next)) {
+                char temp[256];
+                strcpy(temp, lines[j]);
+                strcpy(lines[j], lines[j + 1]);
+                strcpy(lines[j + 1], temp);
+            }
+        }
+    }
+    fp_sort = fopen("Booking_History.csv", "w");
+    fprintf(fp_sort, "%s", line1);
+    for (int i = 0; i < count; i++) {
+        fprintf(fp_sort, "%s", lines[i]);
+    }
+    fclose(fp_sort);
+};
+
+void search_customer(struct about_room about_room) {
+    customerList_sort();
+    printf("How you wanna search ?\n1. By Name\n2. By Phone Number\n3. By Email\n4. By Days\nEnter your choice: ");
     int search_choice;
     scanf("%d", &search_choice);
     switch (search_choice) {
@@ -644,6 +691,82 @@ void search_customer() {
                 }
             }
             fclose(fp_search3);
+            break;
+        case 4:
+            printf("Enter the Dates in (dd/mm/yyyy) format");
+            printf("Enter the start date: ");
+            int start_date, start_month, start_year;
+            scanf("%d/%d/%d", &start_date, &start_month, &start_year);
+            printf("Enter the end date: ");
+            int end_date, end_month, end_year;
+            scanf("%d/%d/%d", &end_date, &end_month, &end_year);
+            FILE *fp_search4;
+            fp_search4 = fopen("Booking_History.csv", "r");
+            char line4[256];
+            char name_search4[50];
+            char address_search4[50];
+            long long int number_search4;
+            char mail_search4[50];
+            char roomtype_search4[50];
+            int roomnumber_search4;
+            int days_search4;
+            char payment_search4[50];
+            int start_date4, start_month4, start_year4;
+            while (fgets(line4, sizeof(line4), fp_search4) != NULL) {
+                sscanf(line4, "%[^,],%[^,],%lld,%[^,],%[^,],%d,%d,%[^,],%d,%d,%d\n", name_search4, address_search4, &number_search4, mail_search4, roomtype_search4, &roomnumber_search4, &days_search4, payment_search4, &start_date4, &start_month4, &start_year4);
+                if (start_year4 >= start_year && start_year4 <= end_year) {
+                    if (start_year4 == start_year == end_year) {
+                        if (start_month4 >= start_month && start_month4 <= end_month) {
+                            if (start_month4 == start_month == end_month) {
+                                if (start_date4 >= start_date && start_date4 <= end_date) {
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                }
+                            }
+                            else if (start_month4 == start_month) {
+                                if (start_date4 >= start_date) {
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                }
+                            }
+                            else if (start_month4 == end_month) {
+                                if (start_date4 <= end_date) {
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                }
+                            }
+                            else {
+                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                            }
+                        }
+                    }
+                    else if (start_year4 == start_year) {
+                        if (start_month4 >= start_month) {
+                            if (start_month4 == start_month) {
+                                if (start_date4 >= start_date) {
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                }
+                            }
+                            else {
+                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                            }
+                        }
+                    }
+                    else if (start_year4 == end_year) {
+                        if (start_month4 <= end_month) {
+                            if (start_month4 == end_month) {
+                                if (start_date4 <= end_date) {
+                                    displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                                }
+                            }
+                            else {
+                                displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                            }
+                        }
+                    }
+                    else {
+                        displayCustomerInfo_withRoomDetails(name_search4, address_search4, number_search4, mail_search4, roomtype_search4, roomnumber_search4, days_search4, payment_search4);
+                    }
+                }
+            }
+            fclose(fp_search4);
             break;
         default:
             printf("Invalid choice!\n");
@@ -773,7 +896,7 @@ void adminPortal() {
                 staff_credentials();
                 break;
             case 3:
-                search_customer();
+                search_customer(about_room);
                 break;
             case 4:
                 feedback_report();
@@ -800,6 +923,9 @@ int main() {
     char* payment_info = malloc(20 * sizeof(char));
     payment_info = "Invalid";
 
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
     SetConsoleOutputCP(CP_UTF8);
     printf("\n");
     printf("       \\        / |‾‾‾ |    |‾‾‾ |‾‾‾|   /\\  /\\   |‾‾‾\n");
@@ -821,7 +947,7 @@ int main() {
 
     while (true) {
 
-        printf("\nMenu:\n1. Customer Information\n2. Display Available Rooms\n3. Reserve a Room\n4. Cancel Reservation\n5. Generate Bill\n6. Make Payment\n7. Exit\n\nEnter your choice: ");
+        printf("\nMenu:\n1. Customer Information\n2. Display Available Rooms\n3. Reserve a Room\n4. Cancel Reservation\n5. Generate Bill\n6. Make Payment\n7. Staff Portal\n8. Admin Portal\n9. Exit\n\nEnter your choice: ");
 
         if (scanf("%d", &choice) != 1) {
             printf("Invalid choice! Please try again.\n");
@@ -861,7 +987,7 @@ int main() {
                 scanf("%d", &about_room.type);
                 printf("Enter the room number to reserve: ");
                 scanf("%d", &about_room.roomNumber);
-                reserveRoom(&about_room);
+                reserveRoom(&about_room, tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
                 break;
             case 4:
                 printf("Enter the room number to cancel reservation: ");
@@ -876,6 +1002,12 @@ int main() {
                 payment_info = payment(customer);
                 break;
             case 7:
+                staffPortal();
+                break;
+            case 8:
+                adminPortal();
+                break;
+            case 9:
                 printf("Are you sure you want to exit the Menu? (y/n): ");
                 scanf("%s", yn);
                 if (strcmp(yn, "y") == 0) {
@@ -891,12 +1023,6 @@ int main() {
                 else {
                     printf("Invalid choice! Returning to Main Menu...\n");
                 }
-                break;
-            case 99:
-                staffPortal();
-                break;
-            case 100:
-                adminPortal();
                 break;
             default:
                 printf("Invalid choice! Please try again.\n");
