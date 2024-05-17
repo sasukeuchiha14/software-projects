@@ -14,7 +14,9 @@ try:
 except:
     print("Invalid Format")
 else:
-    if format == "jpg" or format == "jpeg" or format == "png":
+    if file_format.lower() == "q" or file_format.lower() == "quit" or file_format.lower() == "exit" or file_format.lower() == "close" or file_format.lower() == "stop" or file_format.lower() == "end" or file_format.lower() == "cancel" or file_format.lower() == "abort" or file_format.lower() == "leave" or file_format.lower() == "break":
+        print("Exiting...")
+    elif format == "jpg" or format == "jpeg" or format == "png":
         img.save(file_format)
     else:
         print("Invalid Format")
