@@ -10,7 +10,7 @@ asakey2 = C2()
 
 subprocess.call("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe")
 
-pag.moveTo(754,180,0.5)
+pag.moveTo(600,145,0.5)
 
 for i in range(35):
     
