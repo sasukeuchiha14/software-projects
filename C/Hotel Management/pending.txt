@@ -22,10 +22,10 @@
 
 ✅Room service: add room service charges to a customer's bill.
 
-Date and Time
+✅Date and Time
+
+✅Reporting and analytics: Provide reports and analytics on room occupancy rates, revenue, and customer feedback to help with decision-making and business analysis.
 
 Room service: Add functionality for customers to request room service, such as food, beverages, or housekeeping.
-
-Reporting and analytics: Provide reports and analytics on room occupancy rates, revenue, and customer feedback to help with decision-making and business analysis.
 
 Online reservation: Develop a web or mobile interface that allows customers to make room reservations online.
