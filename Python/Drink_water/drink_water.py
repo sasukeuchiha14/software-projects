@@ -28,4 +28,4 @@ if __name__ == "__main__":
 
         sound_thread.join()
         notification_thread.join()
-        time.sleep(60*60) # 1 hour
+        time.sleep(30*60) # 30 minutes
