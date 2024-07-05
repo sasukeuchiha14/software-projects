@@ -1,8 +1,7 @@
-import subprocess
-from subprocess import Popen, CREATE_NEW_CONSOLE,call
+from subprocess import Popen, CREATE_NEW_CONSOLE
 import time
 from pynput.keyboard import Key, Controller
-from pynput.mouse import Controller as C2, Button
+from pynput.mouse import Controller as C2
 import pyautogui as pag
 
 asakey = Controller()
