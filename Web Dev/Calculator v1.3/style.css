@@ -1,0 +1,114 @@
+*{
+    background-color: rgb(63, 63, 63);
+    margin: 0;
+    padding: 0;
+}
+
+#display{
+    height: 100px;
+    background-color: rgb(255, 255, 255);
+    text-align: end;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px black inset;
+    margin: 50px;
+    margin-bottom: 40px;
+    padding-right: 10px;
+    font-size: 2.25rem;
+    font-weight: 700;
+    max-width: 385px;
+}
+
+.pad{
+    display: grid;
+    /* width: 300px; */
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin: 0px 50px;
+    max-width: 400px;
+}
+
+.pad *{
+    background-color: rgb(143, 143, 143);
+    text-align: center;
+    padding: auto;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.pad *:hover{
+    box-shadow: 0px 0px 3px 0px black;
+    background-color: rgb(173, 172, 172);
+    cursor: pointer;
+}
+
+.num{
+    background-color: rgb(114, 114, 114);
+}
+
+#log_bt1 {
+    background-color: rgb(26, 27, 0);
+    color: rgb(203, 203, 203);
+    text-align: center;
+    padding: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-left: 52px;
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#log_bt1:hover {
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0px 0px 3px 0px rgb(46, 46, 46);
+    cursor: pointer;
+}
+
+#log_bt2 {
+    background-color: rgba(250, 250, 188, 0.421);
+    color: black;
+    text-align: center;
+    padding: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-left: 52px;
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#log_bt2:hover {
+    background-color: rgba(185, 185, 141, 0.421);
+    box-shadow: 0px 0px 3px 0px rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+#log{
+    background-color: rgba(250, 250, 188, 0.421);
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 0px black;
+    font-size: 1.25rem;
+    font-weight: 600;
+    position: absolute;
+    width: 370px;
+    min-height: 430px;
+    top: 50px;
+    margin-left: 555px;
+    display: none;
+}
+
+
+
+@media screen and (max-width:960px) {
+    #log{
+        top: 550px;
+        margin-left: 52px;
+        min-height: 100px;
+    }
+}

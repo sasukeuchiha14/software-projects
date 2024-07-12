@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div id="display">
+            0
+        </div>
+    </header>
+    <main>
+        <button id="log_bt1" onclick="ch_log_disp()">History</button>
+        <div class="pad">
+            <button id="percentage">%</button>
+            <button id="CE" onclick="clear_button()">CE</button>
+            <button id="clear" onclick="clear_button()">C</button>
+            <button id="backspace" onclick="backspace()">←</button>
+            <button id="inverse" onclick="app('⅟')">⅟x</button>
+            <button id="square" onclick="app('²')">x²</button>
+            <button id="root" onclick="app('√')">√x</button>
+            <button id="divide" onclick="app('÷')">÷</button>
+            <button id="seven" class="num" onclick="app(7)">7</button>
+            <button id="eight" class="num" onclick="app(8)">8</button>
+            <button id="nine" class="num" onclick="app(9)">9</button>
+            <button id="multiply" onclick="app('x')">×</button>
+            <button id="four" class="num" onclick="app(4)">4</button>
+            <button id="five" class="num" onclick="app(5)">5</button>
+            <button id="six" class="num" onclick="app(6)">6</button>
+            <button id="substraction" onclick="app('-')">−</button>
+            <button id="one" class="num" onclick="app(1)">1</button>
+            <button id="two" class="num" onclick="app(2)">2</button>
+            <button id="three" class="num" onclick="app(3)">3</button>
+            <button id="addition" onclick="app('+')">+</button>
+            <button id="negation" class="num" onclick="app('~')">∽</button>
+            <button id="zero" class="num" onclick="app(0)">0</button>
+            <button id="decimal" class="num" onclick="app('.00')">.</button>
+            <button id="calculate" onclick="compute()">=</button>
+        </div>
+        <div id="log">Empty</div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
