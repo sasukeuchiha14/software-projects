@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="digital">
+        <span id="hour">00</span>
+        <span>:</span>
+        <span id="minute">00</span>
+        <span>:</span>
+        <span id="second">00</span>
+    </div>
+    <div class="analog">
+        <div id="dots">
+            <div id="hour_2"></div>
+            <div id="minute_2"></div>
+            <div id="second_2"></div>
+        </div>
+    </div>
+    <div class="alarm">
+        <button id="alarm" onclick="display(['alarm_time','alarm_time_submit'])">Alarm</button>
+        <br>
+        <input type="text" id="alarm_time" placeholder="00:00" maxlength="5" onkeypress="return only_num_collon(event)" style="visibility: hidden;">
+        <button id="alarm_time_submit" onclick="alarm('alarm_time')" style="visibility: hidden;">Submit</button>
+        <div class="alarm_history">
+            Hi
+        </div>
+    </div>
+</body>
+</html>

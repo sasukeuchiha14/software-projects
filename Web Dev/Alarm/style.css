@@ -1,0 +1,101 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.digital{
+    margin-left: calc(100% - 250px);
+    height: 100px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+span{
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.analog{
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    border-radius: 100px;
+    margin: 100px;
+}
+
+#dots{
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 2px dotted black;
+    border-radius: 90px;
+    margin: 8px;
+}
+
+#hour_2,#minute_2,#second_2 {
+    position: absolute;
+    background-color: black;
+    transform-origin: bottom;
+}
+
+#hour_2{
+    width: 2.0%;
+    height: 20%;
+    top: 30%;
+    left: 48.85%;
+    opacity: 0.8;
+}
+
+#minute_2{
+    width: 1.5%;
+    height: 30%;
+    top: 19%;
+    left: 48.9%;
+    opacity: 0.8;
+}
+
+#second_2{
+    width: 1%;
+    height: 40%;
+    top: 9%;
+    left: 49.25%;
+    opacity: 0.8;
+}
+
+.alarm{
+    text-align: center;
+}
+
+#alarm{
+    width: 100px;
+    height: 30px;
+    background-color: aquamarine;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 2px solid black;
+    /* text-align: -webkit-center; ??? */
+    margin: 3px;
+    /* border-radius: 10px; */
+}
+
+#alarm:hover{
+    background-color: aqua;
+    cursor: pointer;
+}
+
+#alarm_time{
+    text-align: center;
+    /* Difference between end and right */
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.alarm_history{
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
