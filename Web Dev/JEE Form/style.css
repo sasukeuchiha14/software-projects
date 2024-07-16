@@ -27,10 +27,6 @@ h1{
     column-gap: 10px;
 }
 
-.hidden{
-    visibility:hidden;
-}
-
 .c1_c2{
     grid-column: 1/2;
 }
