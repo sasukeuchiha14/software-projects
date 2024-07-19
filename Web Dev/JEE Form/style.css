@@ -8,6 +8,10 @@ input,select{
     border-bottom: 2px solid black;
 }
 
+input:focus{
+    outline: none;
+}
+
 hr{
     border-top: 2px dotted black;
 }
