@@ -1,8 +1,12 @@
-import subprocess, time
+import time, os
+
+# import subprocess
+# def clear_screen():
+#     subprocess.run("cls", shell=True)  # For Windows: cls, For all others: clear
 
 def clear_screen():
-    subprocess.run("cls", shell=True) # For Windows: cls, For all others: clear
-    
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 clear_screen()
 
 print("\nWelcome to Hangman!\n")
@@ -19,50 +23,51 @@ print("Enter a word to be guessed: {}".format(hidden_word), end="")
 time.sleep(1)
 
 def printHangman(wrong):
-    if wrong == 0:
-        print("\n +---+")
-        print(" |     ")
-        print(" |     ")
-        print(" |     ")
-        print("===")
-    elif wrong == 1:
-        print("\n +---+")
-        print(" |   O ")
-        print(" |           Wrong guesses: {}".format(wrong))
-        print(" |     ")
-        print("===")
-    elif wrong == 2:
-        print("\n +---+")
-        print(" |   O ")
-        print(" |   |       Wrong guesses: {}".format(wrong))
-        print(" |     ")
-        print("===")
-    elif wrong == 3:
-        print("\n +---+")
-        print(" |   O ")
-        print(" |  /|       Wrong guesses: {}".format(wrong))
-        print(" |     ")
-        print("===")
-    elif wrong == 4:
-        print("\n +---+")
-        print(" |   O ")
-        print(" |  /|\      Wrong guesses: {}".format(wrong))
-        print(" |     ")
-        print("===")
-    elif wrong == 5:
-        print("\n +---+")
-        print(" |   O ")
-        print(" |  /|\      Wrong guesses: {}".format(wrong))
-        print(" |  /  ")
-        print("===")
-    elif wrong == 6:
-        print("\n +---+")
-        print(" |   O ")
-        print(" |  /|\      Wrong guesses: {}".format(wrong))
-        print(" |  / \ ")
-        print("===")
-    else:
-        print("Error")
+    match wrong:
+        case 0:
+            print("\n +---+")
+            print(" |     ")
+            print(" |     ")
+            print(" |     ")
+            print("===")
+        case 1:
+            print("\n +---+")
+            print(" |   O ")
+            print(" |           Wrong guesses: {}".format(wrong))
+            print(" |     ")
+            print("===")
+        case 2:
+            print("\n +---+")
+            print(" |   O ")
+            print(" |   |       Wrong guesses: {}".format(wrong))
+            print(" |     ")
+            print("===")
+        case 3:
+            print("\n +---+")
+            print(" |   O ")
+            print(" |  /|       Wrong guesses: {}".format(wrong))
+            print(" |     ")
+            print("===")
+        case 4:
+            print("\n +---+")
+            print(" |   O ")
+            print(" |  /|\      Wrong guesses: {}".format(wrong))
+            print(" |     ")
+            print("===")
+        case 5:
+            print("\n +---+")
+            print(" |   O ")
+            print(" |  /|\      Wrong guesses: {}".format(wrong))
+            print(" |  /  ")
+            print("===")
+        case 6:
+            print("\n +---+")
+            print(" |   O ")
+            print(" |  /|\      Wrong guesses: {}".format(wrong))
+            print(" |  / \ ")
+            print("===")
+        case _:
+            print("Error")
 
 def printWord(guessed_letters):
     counter=0
