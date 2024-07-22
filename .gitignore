@@ -3,4 +3,7 @@
 *.out
 *.com
 
+*.mp4
+*.pptx
+
 __pycache__
