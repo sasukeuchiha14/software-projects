@@ -1,12 +1,12 @@
 *{
-    margin: 0px;
+    margin: 5px auto;
     padding: 0px;
 }
 
 .digital{
-    margin-left: calc(100% - 250px);
     height: 100px;
     width: 250px;
+    margin-bottom: 69px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,12 +17,24 @@ span{
     font-weight: 600;
 }
 
+hr{
+    height: 3px;
+    width: 300px;
+    background-color: rgb(0, 112, 112);
+    border: 1px double black;
+}
+
+.hidden{
+    display: none;
+}
+
 .analog{
     width: 200px;
     height: 200px;
+    margin-top: 69px;
     border: 2px solid black;
     border-radius: 100px;
-    margin: 100px;
+    background-color: rgba(85, 255, 255, 0.348);
 }
 
 #dots{
@@ -64,6 +76,10 @@ span{
     opacity: 0.8;
 }
 
+.at_90{
+    transform: rotate(90deg);
+}
+
 .alarm{
     text-align: center;
 }
@@ -71,31 +87,73 @@ span{
 #alarm{
     width: 100px;
     height: 30px;
-    background-color: aquamarine;
+    color: white;
     font-size: 1.5rem;
     font-weight: 600;
-    border: 2px solid black;
-    /* text-align: -webkit-center; ??? */
-    margin: 3px;
-    /* border-radius: 10px; */
-}
-
-#alarm:hover{
-    background-color: aqua;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 13px;
     cursor: pointer;
 }
 
-#alarm_time{
+.alarm_background_1{background-color: rgba(0, 139, 139, 0.8);}
+.alarm_background_1:hover{background-color: rgb(0, 112, 112);}
+
+.alarm_background_2{background-color: rgb(0, 112, 112);}
+.alarm_background_2:hover{background-color: rgba(0, 139, 139, 0.8);}
+
+/* Difference between end and right */
+
+#alarm_time_in {
     text-align: center;
-    /* Difference between end and right */
     width: 50px;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
     border-radius: 5px;
+    padding: 3px;
+    width: 80px;
 }
 
-.alarm_history{
+#alarm_time_in_submit {
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 3px;
+    width: 80px;
+}
+
+#alarm_time_in{background-color: rgba(172, 255, 47, 0.355);}
+
+#alarm_time_in_submit{background-color: greenyellow;}
+
+#alarm_time_in_submit:hover {background-color: rgb(99, 228, 0);}
+
+.alarm_remove_button{
+    height: 14px;
+    width: 14px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: rgba(255, 47, 47, 0.256);
+    cursor: pointer;
+}
+
+.alarm_remove_button:hover {background-color: rgba(255, 0, 0, 0.6);}
+
+#alarm_history_button{
+    background-color: rgba(85, 255, 255, 0.5);
+    padding: 3px;
+    border: 2px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#alarm_history_button:hover{background-color: rgb(85, 255, 255);}
+
+#alarm_history{
     text-align: center;
-    width: 100px;
-    height: 100px;
-    background-color: red;
+    margin: 30px auto;
+    background-color: rgba(85, 255, 255, 0.348);
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 200px;
+    min-height: 100px;
 }
