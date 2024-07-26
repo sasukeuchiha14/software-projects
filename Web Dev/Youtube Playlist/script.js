@@ -28,6 +28,19 @@ function redirect(link) {
     // window.location.href = link; To change existing page's link
 }
 
+function check_vid_length(time) {
+    let timeArr = time.split(':');
+    let hours = parseInt(timeArr[0]);
+    let minutes = parseInt(timeArr[1]);
+    let seconds = parseInt(timeArr[2]);
+
+    if (timeArr[0].length != 2 || timeArr[1].length != 2 || timeArr[2].length != 2 || hours > 24 || minutes > 59 || seconds > 59 || hours < 0 || minutes < 0 || seconds < 0) {
+        return false;
+    }
+
+    return true;
+}
+
 function views_short(views) {
     let shortForm = "";
 
@@ -126,8 +139,8 @@ function validateFunc(event) {
         return false
     }
 
-    if (document.getElementById('video_length').value.length == 0) {
-        alert("Please Enter Your Video Length")
+    if (document.getElementById('video_length').value.length == 0 || !check_vid_length(document.getElementById('video_length').value)) {
+        alert("Please Enter Your Video Length Properly")
         document.getElementById('video_length').style.backgroundColor = 'rgb(255, 221, 221)';
         document.getElementById('video_length').focus()
         return false
