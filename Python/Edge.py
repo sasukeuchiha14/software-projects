@@ -12,7 +12,7 @@ asakey2 = C2()
 
 # Closing choices for the program - pop-up window
 choices = ["Sleep", "Hubernate", "Shutdown", "None"]
-selected_choice = easygui.buttonbox("Select an option:", choices=choices, title="Way to close", default_choice=choices[3], cancel_choice=choices[3])
+selected_choice = easygui.buttonbox("How you want to exit the program?\nPlease select the option:", choices=choices, title="Way to close", default_choice=choices[3], cancel_choice=choices[3])
 
 # Listener for the escape key
 exit_flag = False
