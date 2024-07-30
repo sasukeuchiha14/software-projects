@@ -1,9 +1,6 @@
 import time, os
 
-# import subprocess
-# def clear_screen():
-#     subprocess.run("cls", shell=True)  # For Windows: cls, For all others: clear
-
+# Function to clear the screen
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -22,6 +19,7 @@ print("Enter a word to be guessed: {}".format(hidden_word), end="")
 
 time.sleep(1)
 
+# Function to print the hangman figure based on the number of wrong guesses
 def printHangman(wrong):
     match wrong:
         case 0:
@@ -69,6 +67,7 @@ def printHangman(wrong):
         case _:
             print("Error")
 
+# Function to print the word with guessed letters and underscores for unguessed letters
 def printWord(guessed_letters):
     counter=0
     right_letters=0
@@ -81,6 +80,7 @@ def printWord(guessed_letters):
         counter+=1
     return right_letters
 
+# Function to print lines below the word
 def printLines():
     print("\r")
     for i in range(0, len(word)):
