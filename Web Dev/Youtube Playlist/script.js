@@ -83,7 +83,7 @@ function addVideo(img_link, video_link, time, title, channelName, channelLink, v
     let views_inshort = views_short(views);
     
     text = `<div class="card">` +
-                `<div class="number">${NumberOfCards}</div>` +
+                `<div class="number" onclick="remove(${NumberOfCards})">${NumberOfCards}</div>` +
                 `<div class="img" onclick="redirect('${video_link}')">` +
                     `<img src="${img_link}">` +
                     `<div class="time">${time}</div>` +
@@ -189,4 +189,12 @@ function validateFunc(event) {
     addVideo(img_link.value, video_link.value, video_length.value, title.value, channelName.value, channelLink.value, views.value, monthsOld.value);
 
     return false;
+}
+
+function remove(num) {
+    document.getElementById('cards').removeChild(document.getElementById('cards').childNodes[num]);
+    var brElement = document.getElementById('cards').getElementsByTagName('br')[0];
+    if (brElement) {
+        brElement.parentNode.removeChild(brElement);
+    }
 }
