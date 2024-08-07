@@ -95,129 +95,132 @@ function alarm_remove(alarm_time) {
 }
 
 function alarm(hr,min,sec) {
-    windowSpecificatons = `width=350,height=300,left=${window.innerWidth/2 - 350/2},top=${window.innerHeight/2 - 300/2}, toolbar=no`;
-    let alarm_window = window.open('','Alarm',windowSpecificatons)
-    alarm_window.document.write(
-    `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Alarm</title>
-        <style>
-            .alarm_clock{
-                width: 204px;
-                height: 204px;
-                margin-top: 50px;
-                margin-left: 65px;
-                transition: all .3;
-            }
-            .alarm_clock *{
-                border: 2px solid black;
-            }
+    let windowSpecifications = `width=350,height=300,left=${window.innerWidth/2 - 350/2},top=${window.innerHeight/2 - 300/2},toolbar=no`;
+    let alarm_window = window.open('about:blank', 'Alarm', windowSpecifications);
+    if (alarm_window) {
+        alarm_window.document.write(
+            `<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>Alarm</title>
+                <style>
+                    .alarm_clock{
+                        width: 204px;
+                        height: 204px;
+                        margin-top: 50px;
+                        margin-left: 65px;
+                        transition: all .3;
+                    }
+                    .alarm_clock *{
+                        border: 2px solid black;
+                    }
 
-            .extra_ear{
-                position: absolute;
-                z-index: -1;
-                width: 70px;
-                height: 70px;
-                border-radius: 35px;
-                background-color: black;
-            }
-            .extra_leg{
-                position: absolute;
-                z-index: -1;
-                width: 90px;
-                height: 90px;
-                border-radius: 35px;
-                background-color: black;
-            }
-            #ear_1{
-                margin-top: -10px;
-                margin-left: 20px;
-            }
-            #ear_2{
-                margin-top: -10px;
-                margin-left: 100px;
-            }
-            #leg_1{
-                margin-top: 120px;
-                margin-left: 10px;
-            }
-            #leg_2{
-                margin-top: 120px;
-                margin-left: 100px;
-            }
+                    .extra_ear{
+                        position: absolute;
+                        z-index: -1;
+                        width: 70px;
+                        height: 70px;
+                        border-radius: 35px;
+                        background-color: black;
+                    }
+                    .extra_leg{
+                        position: absolute;
+                        z-index: -1;
+                        width: 90px;
+                        height: 90px;
+                        border-radius: 35px;
+                        background-color: black;
+                    }
+                    #ear_1{
+                        margin-top: -10px;
+                        margin-left: 20px;
+                    }
+                    #ear_2{
+                        margin-top: -10px;
+                        margin-left: 100px;
+                    }
+                    #leg_1{
+                        margin-top: 120px;
+                        margin-left: 10px;
+                    }
+                    #leg_2{
+                        margin-top: 120px;
+                        margin-left: 100px;
+                    }
 
-            #main_clock{
-                width: 200px;
-                height: 200px;
-                border-radius: 100px;
-                background-color: rgba(85, 255, 255);
-            }
+                    #main_clock{
+                        width: 200px;
+                        height: 200px;
+                        border-radius: 100px;
+                        background-color: rgba(85, 255, 255);
+                    }
 
-            .dots{
-                position: absolute;
-                width: 180px;
-                height: 180px;
-                border: 2px dotted black;
-                border-radius: 90px;
-                margin: 8px;
-            }
+                    .dots{
+                        position: absolute;
+                        width: 180px;
+                        height: 180px;
+                        border: 2px dotted black;
+                        border-radius: 90px;
+                        margin: 8px;
+                    }
 
-            #clock_hour,#clock_minute {
-                position: absolute;
-                background-color: black;
-                transform-origin: bottom;
-            }
-            #clock_hour{
-                width: 2.0%;
-                height: 20%;
-                top: 30%;
-                left: 48.85%;
-                opacity: 0.8;
-            }
-            #clock_minute{
-                width: 1.5%;
-                height: 30%;
-                top: 19%;
-                left: 48.9%;
-                opacity: 0.8;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="alarm_clock">
-            <div class="extra_ear" id="ear_1"></div>
-            <div class="extra_ear" id="ear_2"></div>
-            <div class="extra_leg" id="leg_1"></div>
-            <div class="extra_leg" id="leg_2"></div>
-            <div id="main_clock">
-                <div class="dots">
-                    <div id="clock_hour"></div>
-                    <div id="clock_minute"></div>
+                    #clock_hour,#clock_minute {
+                        position: absolute;
+                        background-color: black;
+                        transform-origin: bottom;
+                    }
+                    #clock_hour{
+                        width: 2.0%;
+                        height: 20%;
+                        top: 30%;
+                        left: 48.85%;
+                        opacity: 0.8;
+                    }
+                    #clock_minute{
+                        width: 1.5%;
+                        height: 30%;
+                        top: 19%;
+                        left: 48.9%;
+                        opacity: 0.8;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="alarm_clock">
+                    <div class="extra_ear" id="ear_1"></div>
+                    <div class="extra_ear" id="ear_2"></div>
+                    <div class="extra_leg" id="leg_1"></div>
+                    <div class="extra_leg" id="leg_2"></div>
+                    <div id="main_clock">
+                        <div class="dots">
+                            <div id="clock_hour"></div>
+                            <div id="clock_minute"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <audio src="assets/audio/tune.mp3" autoplay loop></audio>
-        <script>
-            var clock_hr = 30 * ${hr} + ${min}/2 + ${sec}/120;
-            var clock_min = 6 * ${min} + ${sec}/10;` +
+                <audio src="assets/audio/tune.mp3" autoplay loop></audio>
+                <script>
+                    var clock_hr = 30 * ${hr} + ${min}/2 + ${sec}/120;
+                    var clock_min = 6 * ${min} + ${sec}/10;` +
 
-            "document.getElementById('clock_hour').style.transform = `rotate(${clock_hr}deg)`;" +
-            "document.getElementById('clock_minute').style.transform = `rotate(${clock_min}deg)`;" +
+                    "document.getElementById('clock_hour').style.transform = `rotate(${clock_hr}deg)`;" +
+                    "document.getElementById('clock_minute').style.transform = `rotate(${clock_min}deg)`;" +
 
-            `document.getElementsByClassName('alarm_clock')[0].style.transform = 'rotate(2.5deg)';
+                    `document.getElementsByClassName('alarm_clock')[0].style.transform = 'rotate(2.5deg)';
 
-            var check = 0;
-            setInterval(() => {
-                if ((check%2) == 0) {document.getElementsByClassName('alarm_clock')[0].style.transform = 'rotate(5deg)';}
-                else {document.getElementsByClassName('alarm_clock')[0].style.transform = 'rotate(-5deg)';}
-                check++;
-            },150)
-            
-        </script>
-    </body>
-    </html>`);
+                    var check = 0;
+                    setInterval(() => {
+                        if ((check%2) == 0) {document.getElementsByClassName('alarm_clock')[0].style.transform = 'rotate(5deg)';}
+                        else {document.getElementsByClassName('alarm_clock')[0].style.transform = 'rotate(-5deg)';}
+                        check++;
+                    },150)
+                    
+                </script>
+            </body>
+            </html>`
+        );
+    };
 }
 
 setInterval(() => {
