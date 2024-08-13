@@ -1,4 +1,32 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@600&family=Noto+Sans:ital,wght@0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&family=Poppins:wght@300;400;700&display=swap');
+*{
+    margin: 0px;
+    padding: 10px;
+    font-family: 'Martel Sans', sans-serif;
+    font-size: large;
     background-color: black;
     color: greenyellow;
+}
+#screen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    border: 0px;
+    padding: 0;
+}
+p {
+    margin: 10px;
+    font-size: larger;
+    text-align: center;
+}
+#terminal {
+    height: 80vh;
+    width: 100vh;
+    margin: auto;
+    /* margin-top: 70px; */
+    border: 1px solid white;
+}
+.hide{
+    display: none;
 }
