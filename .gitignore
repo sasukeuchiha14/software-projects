@@ -6,4 +6,5 @@
 *.mp4
 *.pptx
 
+songs/
 __pycache__
