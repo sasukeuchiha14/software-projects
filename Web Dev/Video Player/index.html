@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Video Player</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
     <!-- These three are only for Icons -->
@@ -12,7 +13,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
-    <div class="container">
+    <div class="file-input">
+        <label for="file">Choose a video</label>
+        <input type="file" id="file" accept="video/*">
+    </div>
+    <div class="container show-controls">
         <div class="wrapper">
             <div class="video-timeline">
                 <div class="progress-area">
@@ -23,7 +28,7 @@
             <ul class="video-controls">
                 <li class="options left">
                     <button class="volume"><i class="fa-solid fa-volume-high"></i></button>
-                    <input type="range" value="50">
+                    <input type="range" min="0" max="1" step="any">
                     <div class="video-timer">
                         <p class="current-time">00:00</p>
                         <p class="seperator"> / </p>
@@ -31,11 +36,20 @@
                     </div>
                 </li>
                 <li class="options center">
-                    <button class="skip-backword"><i class="fas fa-backward"></i></button>
+                    <button class="skip-backward"><i class="fas fa-backward"></i></button>
                     <button class="play-pause"><i class="fas fa-play"></i></button>
-                    <button class="skip-forword"><i class="fas fa-forward"></i></button>
+                    <button class="skip-forward"><i class="fas fa-forward"></i></button>
                 </li>
                 <li class="options right">
+                    <!-- <div class="subtitle-language">
+                        <button class="subtitle-language-change">
+                            <span class="material-icons">closed_caption</span>
+                        </button>
+                        <ul class="subtitle-language-options" style="display: none;">
+                            <li>SUbtitles</li>
+                            <li>Audio</li>
+                        </ul>
+                    </div> -->
                     <div class="playback-content">
                         <button class="playback-speed">
                             <span class="material-symbols-rounded">slow_motion_video</span>
@@ -43,7 +57,7 @@
                         <ul class="speed-options">
                             <li data-speed="0.5">0.5x</li>
                             <li data-speed="0.75">0.75x</li>
-                            <li class="active" data-speed="1">1x</li>
+                            <li class="active" data-speed="1">Normal</li>
                             <li data-speed="1.5">1.5x</li>
                             <li data-speed="2">2x</li>
                         </ul>
@@ -52,12 +66,16 @@
                         <span class="material-icons">picture_in_picture_alt</span>
                     </button>
                     <button class="fullscreen">
-                        <span class="material-icons">fullscreen</span>
+                        <i class="fas fa-expand"></i>
                     </button>
                 </li>
             </ul>
         </div>
-        <video src="test.mp4"></video>
+        <video id="video">
+            <source id="video-source" src="">
+            Your browser does not support the video tag.
+        </video>
     </div>
+    <p id="creator">- Made by Hardik Garg</p>
 </body>
 </html>

@@ -7,6 +7,8 @@
 }
 
 body{
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     background: rgb(88,153,226);
     background: radial-gradient(circle, rgba(88,153,226,1) 0%, rgba(128,177,233,1) 36%, rgba(255,255,255,1) 100%);
@@ -18,6 +20,28 @@ body, .video-controls, .video-timer, .options {
     align-items: center;
 }
 
+.file-input{
+    width: 98%;
+    max-width: 900px;
+    text-align: center;
+    margin: 0px auto 40px auto;
+}
+
+.file-input label{
+    cursor: pointer;
+    padding: 10px 20px;
+    background: #2289ff;
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.13s ease;
+}
+
+.file-input input{
+    display: none;
+}
+
 .container{
     width: 98%;
     max-width: 900px;
@@ -27,12 +51,27 @@ body, .video-controls, .video-timer, .options {
     overflow: hidden;
 }
 
+.container.fullscreen{
+    max-width: 100%;
+    width: 100%;
+}
+
 .wrapper{
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: -15px;
     z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.08s ease;
+}
+
+.container.show-controls .wrapper{
+    bottom: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.13s ease;
 }
 
 .wrapper::before{
@@ -67,7 +106,7 @@ body, .video-controls, .video-timer, .options {
 }
 
 .progress-area .progress-bar{
-    width: 50%;
+    width: 0%;
     height: 100%;
     position: relative;
     background: #2289ff;
@@ -102,10 +141,10 @@ body, .video-controls, .video-timer, .options {
     width: 100%;
 }
 
-.video-controls .options :first-child{
+.video-controls .options:first-child{
     justify-content: flex-start;
 }
-.video-controls .options :last-child{
+.video-controls .options:last-child{
     justify-content: flex-end;
 }
 
@@ -155,10 +194,9 @@ body, .video-controls, .video-timer, .options {
     transition: opacity 0.13s ease;
 }
 
-.playback-content button:hover ~ .speed-options{
+.playback-content .speed-options.show{
     opacity: 1;
     pointer-events: auto;
-
 }
 
 .speed-options li{
@@ -175,3 +213,54 @@ body, .video-controls, .video-timer, .options {
 .container video{
     width: 100%;
 }
+
+#creator {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+}
+
+@media screen and (max-width: 540px) {
+    .wrapper .video-controls{
+        padding: 3px 10px 7px;
+    }
+    .options input, .progress-area span{
+        display: none!important;
+    }
+    .options button{
+        height: 30px;
+        width: 30px;
+        font-size: 17px;
+    }
+    .options .video-timer{
+        margin-left: 5px;
+    }
+    .video-timer .separator{
+        font-size: 14px;
+        margin: 0 2px;
+    }
+    .options button :where(i, span) {
+        line-height: 30px;
+    }
+    .options button span{
+        font-size: 21px;
+    }
+    .options .video-timer, .progress-area span, .speed-options li{
+        font-size: 12px;
+    }
+    .playback-content .speed-options{
+        width: 75px;
+        right: 30px;
+        bottom: 30px;
+    }
+    .speed-options li{
+        margin: 1px 0;
+        padding: 3px 0 3px 10px;
+    }
+    .right .pic-in-pic{
+        display: none;
+    }
+  }
