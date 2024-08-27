@@ -97,7 +97,7 @@ volumeBtn.addEventListener('click', () => {
         mainVideo.volume = volume;
         volumeBtn.classList.replace('fa-volume-xmark', 'fa-volume-high');
     }
-    else{
+    else {
         mainVideo.volume = 0;
         volumeBtn.classList.replace('fa-volume-high', 'fa-volume-xmark');
     }
@@ -110,7 +110,7 @@ volumeSlider.addEventListener('input', e => {
     if (e.target.value == 0) {
         volumeBtn.classList.replace('fa-volume-high', 'fa-volume-xmark');
     }
-    else{
+    else {
         volumeBtn.classList.replace('fa-volume-xmark', 'fa-volume-high');
     }
 });
@@ -134,11 +134,11 @@ mainVideo.addEventListener('pause', () => {
 });
 
 skipBackward.addEventListener('click', () => {
-    mainVideo.currentTime -= 10;
+    mainVideo.currentTime -= 5;
 });
 
 skipForward.addEventListener('click', () => {
-    mainVideo.currentTime += 10;
+    mainVideo.currentTime += 5;
 });
 
 speedBtn.addEventListener('click', () => {
@@ -214,4 +214,90 @@ function handleFiles(files) {
 
 chooseFile.addEventListener('change', () => {
     handleFiles(chooseFile.files);
+});
+
+// Keyboard shortcuts
+addEventListener('keydown', e => {
+    // space key to play/pause the video
+    if (e.key === ' ') {
+        mainVideo.paused ? mainVideo.play() : mainVideo.pause();
+    }
+
+    // right arrow key to skip time forward
+    if (e.key === 'ArrowRight') {
+        mainVideo.currentTime += 5;
+    }
+    if (e.key === 'ArrowRight' && e.shiftKey) {
+        mainVideo.currentTime += 5;
+    }
+
+    // left arrow key to skip time 5s backward
+    if (e.key === 'ArrowLeft') {
+        mainVideo.currentTime -= 5;
+    }
+    if (e.key === 'ArrowLeft' && e.shiftKey) {
+        mainVideo.currentTime -= 5;
+    }
+
+    // up arrow key to increase volume
+    if (e.key === 'ArrowUp') {
+        volume += 0.1;
+        mainVideo.volume = Math.min(volume, 1);
+        volumeSlider.value = mainVideo.volume;
+        if (volumeBtn.classList.contains('fa-volume-xmark')) {
+            volumeBtn.classList.replace('fa-volume-xmark', 'fa-volume-high');
+        }
+    }
+
+    // down arrow key to decrease volume
+    if (e.key === 'ArrowDown') {
+        volume -= 0.1;
+        if (volume < 0.1) {
+            volume = 0;
+        }
+        mainVideo.volume = Math.max(volume, 0);
+        volumeSlider.value = mainVideo.volume;
+        if (volume == 0) {
+            volumeBtn.classList.replace('fa-volume-high', 'fa-volume-xmark');
+        }
+    }
+
+    // f key to toggle fullscreen
+    if (e.key === 'f') {
+        Container.classList.toggle('fullscreen');
+        if (document.fullscreenElement) {
+            fullScreenBtn.classList.replace('fa-compress', 'fa-expand');
+            return document.exitFullscreen();
+        }
+        fullScreenBtn.classList.replace('fa-expand', 'fa-compress');
+        Container.requestFullscreen();
+    }
+
+    // m key to mute/unmute the video
+    if (e.key === 'm') {
+        if (!volumeBtn.classList.contains('fa-volume-high')) {
+            mainVideo.volume = volume;
+            volumeBtn.classList.replace('fa-volume-xmark', 'fa-volume-high');
+        }
+        else {
+            mainVideo.volume = 0;
+            volumeBtn.classList.replace('fa-volume-high', 'fa-volume-xmark');
+        }
+        volumeSlider.value = mainVideo.volume;
+    }
+
+    // p key to toggle picture-in-picture mode
+    if (e.key === 'p') {
+        mainVideo.requestPictureInPicture();
+    }
+
+    // s key to toggle playback speed options
+    if (e.key === 's') {
+        speedOptions.classList.toggle('show');
+    }
+
+    // i key to open file input
+    if (e.key === 'i') {
+        file.click();
+    }
 });
