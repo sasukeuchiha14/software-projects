@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.left{
+    width: 22vw;
+}
+
+.right{
+    width: 78vw;
+}
+
+.border{
+    border: 1px solid black;
+    height: 100px;
+}
