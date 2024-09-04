@@ -21,7 +21,7 @@ nav {
     padding: 6px;
 }
 
-a{
+nav a{
     font-size: 1.2rem;
     font-weight: 600;
     color: white;
@@ -34,6 +34,14 @@ a{
 nav a:hover{
     text-shadow: rgb(166, 166, 166) 0px 0px 10px;
     font-size: 1.3rem;
+}
+
+marquee {
+    color: red;
+    font-size: small;
+    font-weight: 600;
+    /* text-align: center; */
+    padding: 6px;
 }
 
 main{
