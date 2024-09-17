@@ -305,6 +305,10 @@ body {
     #artist {
         display: none;
     }
+
+    .playnow span {
+        display: none;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -337,6 +341,10 @@ body {
 
     .library {
         height: calc(100vh - 200px);
+    }
+
+    .playnow span {
+        display: block;
     }
 
     .playbar {
