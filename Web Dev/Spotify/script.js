@@ -49,7 +49,7 @@ async function getSongs(folder) {
 
     // Attach an event listener to each song
     Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
-        e.addEventListener("click", element => {
+        e.addEventListener("click", () => {
             playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim())
         })
     })
@@ -58,7 +58,7 @@ async function getSongs(folder) {
 }
 
 const playMusic = (track, pause = false) => {
-    currentSong.src = `/${currFolder}/` + track
+    currentSong.src = `/${currFolder}/` + track;
     if (!pause) {
         currentSong.play()
         play.src = "assets/images/pause.svg"
@@ -131,8 +131,10 @@ async function main() {
 
     // Listen for timeupdate event
     currentSong.addEventListener("timeupdate", () => {
-        document.querySelector(".songtime").innerHTML = `${secondsToMinutesSeconds(currentSong.currentTime)} / ${secondsToMinutesSeconds(currentSong.duration)}`
-        document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
+        if (!isNaN(currentSong.duration) && isFinite(currentSong.duration)) {
+            document.querySelector(".songtime").innerHTML = `${secondsToMinutesSeconds(currentSong.currentTime)} / ${secondsToMinutesSeconds(currentSong.duration)}`
+            document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
+        }
     })
 
     // Add an event listener to seekbar
