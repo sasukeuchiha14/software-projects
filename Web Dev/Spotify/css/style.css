@@ -301,6 +301,12 @@ body {
     cursor: pointer;
 }
 
+@media (max-width: 1600px) {
+    #artist {
+        display: none;
+    }
+}
+
 @media (max-width: 1200px) {
     .left {
         position: fixed;
@@ -374,6 +380,10 @@ body {
     .play {
         bottom: 100px;
         opacity: 1;
+    }
+
+    #artist {
+        display: block;
     }
 }
 
