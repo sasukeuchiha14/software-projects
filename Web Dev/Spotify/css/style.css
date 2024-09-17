@@ -225,7 +225,7 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 190px;
+    bottom: 80px;
     right: 20px;
     opacity: 0;
     transition: all 0.5s ease-out;
@@ -234,7 +234,7 @@ body {
 
 .card:hover .play {
     opacity: 1;
-    top: 170px;
+    bottom: 110px;
 }
 
 .playbar {
@@ -369,6 +369,11 @@ body {
     .cardContainer {
         margin: 0px;
         justify-content: center;
+    }
+
+    .play {
+        bottom: 100px;
+        opacity: 1;
     }
 }
 
