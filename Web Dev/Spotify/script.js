@@ -58,7 +58,7 @@ async function getSongs(folder) {
 }
 
 const playMusic = (track, pause = false) => {
-    currentSong.src = `/${currFolder}/` + track;
+    currentSong.src = `/${currFolder}/` + track
     if (!pause) {
         currentSong.play()
         play.src = "assets/images/pause.svg"
@@ -111,7 +111,7 @@ async function displayAlbums() {
 
 async function main() {
     // Get the list of all the songs
-    await getSongs("songs/aashiqui")
+    await getSongs("songs/Aashiqui")
     playMusic(songs[0], true)
 
     // Display all the albums on the page
