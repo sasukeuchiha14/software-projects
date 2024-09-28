@@ -36,6 +36,8 @@ subprocess.call("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.e
 # Move the mouse to the search bar
 pag.moveTo(600,145,0.5)
 
+time.sleep(5)
+
 # Do the Searches
 for i in range(35):
 
@@ -74,7 +76,7 @@ for i in range(35):
     asakey.press(Key.enter)
 
     # Waits for a random time between 4 and 7 seconds
-    y=random.randint(4,7)
+    y=random.randint(7,10)
     time.sleep(y)
 
 # Close the Edge Browser after 2 seconds
