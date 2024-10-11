@@ -19,7 +19,7 @@
     max-width: 385px;
 }
 
-.pad{
+#pad{
     display: grid;
     /* width: 300px; */
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -28,7 +28,7 @@
     max-width: 400px;
 }
 
-.pad *{
+#pad *{
     background-color: rgb(143, 143, 143);
     text-align: center;
     padding: auto;
@@ -39,7 +39,7 @@
     font-weight: 600;
 }
 
-.pad *:hover{
+#pad *:hover{
     box-shadow: 0px 0px 3px 0px black;
     background-color: rgb(173, 172, 172);
     cursor: pointer;
@@ -96,17 +96,20 @@
     font-size: 1.25rem;
     font-weight: 600;
     position: absolute;
+    width: 100%;
     width: 370px;
     min-height: 430px;
     top: 50px;
     margin-left: 555px;
     display: none;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 @media screen and (max-width:960px) {
     #log{
         top: 550px;
-        margin-left: 52px;
         min-height: 100px;
+        margin-left: 52px;
     }
 }

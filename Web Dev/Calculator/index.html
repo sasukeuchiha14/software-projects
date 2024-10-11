@@ -15,7 +15,7 @@
     </header>
     <main>
         <button id="log_bt1" onclick="ch_log_disp()">History</button>
-        <div class="pad">
+        <div id="pad">
             <button id="percentage">%</button>
             <button id="CE" onclick="clear_button()">CE</button>
             <button id="clear" onclick="clear_button()">C</button>
@@ -38,10 +38,10 @@
             <button id="addition" onclick="app('+')">+</button>
             <button id="negation" class="num" onclick="app('~')">∽</button>
             <button id="zero" class="num" onclick="app(0)">0</button>
-            <button id="decimal" class="num" onclick="app('.00')">.</button>
+            <button id="decimal" class="num" onclick="app('.')">.</button>
             <button id="calculate" onclick="compute()">=</button>
         </div>
-        <div id="log">Empty</div>
+        <div id="log" style="display: none;">Empty</div>
     </main>
     <script src="script.js"></script>
 </body>

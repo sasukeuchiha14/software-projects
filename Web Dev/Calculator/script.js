@@ -1,3 +1,15 @@
+window.onload = function() {
+    if (window.innerWidth < 500) {
+        document.getElementById("log").style.width = `${window.innerWidth * 0.73}px`;
+    }
+};
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth < 500) {
+        document.getElementById("log").style.width = `${window.innerWidth * 0.73}px`;
+    }
+});
+
 var arr = [];
 let sentence = '';
 
@@ -9,7 +21,6 @@ function app(x) {
     arr.push(x);
     sentence+=x
     disp(sentence);
-    // console.log('x ' + x );
 }
 
 function backspace() {
@@ -97,16 +108,16 @@ function add_to_log(question,answer) {
 
 function compute() {
 
-    let a=0;
+    let a=[];
     let i=0;
-    for (i;typeof(arr[i])==='number';i++) {
-        a = (a*10 + arr[i]);
+    for ( i; typeof(arr[i])==='number' || arr[i] === '.' ; i++) {
+        a.push(arr[i]);
     }
+    a = parseFloat(a.join(''));
 
     let to_solve = sentence;
     sentence = read_line(i,a);
-    disp(sentence);
-    arr = []
+    disp(sentence.toString());
     arr[0] = sentence;
     sentence = sentence.toString();
     let ans = sentence;
@@ -116,10 +127,10 @@ function compute() {
 function ch_log_disp() {
     if (document.getElementById("log").style.display != "none") {
         document.getElementById("log").style.display = "none";
-
+        document.getElementById("log_bt2").id = "log_bt1";
     }
     else {
         document.getElementById("log").style.display = "block";
-
+        document.getElementById("log_bt1").id = "log_bt2";
     }
 }
