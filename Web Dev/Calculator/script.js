@@ -117,6 +117,9 @@ function compute() {
 
     let to_solve = sentence;
     sentence = read_line(i,a);
+    if (!isNaN(sentence)) {
+        sentence = parseFloat(sentence).toFixed(4);
+    }
     disp(sentence.toString());
     arr[0] = sentence;
     sentence = sentence.toString();
