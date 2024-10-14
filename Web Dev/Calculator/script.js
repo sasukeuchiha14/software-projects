@@ -29,8 +29,7 @@ function backspace() {
     for (let i=0;i<(sentence.length-1);i++) {
         sentence2 += sentence[i]
     }
-    sentence = sentence2
-    console.log(sentence);
+    sentence = sentence2;
     disp(sentence);
 }
 
@@ -84,22 +83,22 @@ function applyOp(num1, num2, oper) {
         case '÷':
             return num1/num2;
         case '⅟':
-            return num1 + 1/num2;
+            return num1 * 1/num2;
         case '²':
             if (isNaN(num2))
                 return num1*num1
             else
-                return num1*num1*num2;
+                return num1*num1 * (num2);
         case '√':
             if (isNaN(num1))
                 return Math.sqrt(num2);
             else
                 return num1*Math.sqrt(num2);
         case '~':
-            if (num1!=0)
-                return num1*(~num2)
-            else
+            if (isNaN(num1))
                 return ~num2
+            else
+                return num1*(~num2)
         default:
             console.log("Operant doesn't exist");
             alert("Operant doesn't exist");
@@ -107,7 +106,24 @@ function applyOp(num1, num2, oper) {
         }
 }
 
+function handleSpecialCases(expression) {
+    let modifiedExpression = '';
+    for (let i = 0; i < expression.length; i++) {
+        if (expression[i] === '²' && (i === expression.length - 1 || isNaN(expression[i + 1]))) {
+            modifiedExpression += '²1';
+        } else if (expression[i] === '²' && !isNaN(expression[i + 1])) {
+            modifiedExpression += '²';
+        } else if (expression[i] === '⅟' && (i === 0 || isNaN(expression[i - 1]))) {
+            modifiedExpression += '1⅟';
+        } else {
+            modifiedExpression += expression[i];
+        }
+    }
+    return modifiedExpression;
+}
+
 function evaluate(expression) {
+    expression = handleSpecialCases(expression);
     let values = [];
     let ops = [];
     let i = 0;
@@ -126,7 +142,8 @@ function evaluate(expression) {
             }
             values.push(parseFloat(val));
             i--;
-        } else {
+        }
+        else {
             while (ops.length && precedence(ops[ops.length - 1]) >= precedence(expression[i])) {
                 let val2 = values.pop();
                 let val1 = values.pop();
