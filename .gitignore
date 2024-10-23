@@ -1,10 +1,68 @@
+# Log files
 *.log
+
+# Compiled executable files
 *.exe
 *.out
 *.com
 
+# Media files
 *.mp3
 *.mp4
-*.pptx
 
+# Presentation files
+*.pptx
+*.ppt
+*.pdf
+
+# Python cache directories
 __pycache__
+
+# Node.js dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing coverage reports
+coverage/
+
+# Production build output
+build/
+
+# Miscellaneous system files
+.DS_Store
+
+# Environment variable files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE and editor specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.old
+
+# Backup files
+*.orig
+*.save
+
+# OS generated files
+Thumbs.db
+Desktop.ini
