@@ -1,0 +1,7 @@
+marquee {
+    color: red;
+    font-size: small;
+    font-weight: 600;
+    /* text-align: center; */
+    padding: 6px;
+}

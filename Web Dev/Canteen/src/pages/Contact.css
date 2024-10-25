@@ -1,0 +1,42 @@
+#form-container{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    padding: 70px;
+}
+
+#form-regarding, #form-container input, #form-text, #form-submit{
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+}
+
+#form-regarding {
+    /* width: 90%; */
+}
+
+#form-first-name, #form-last-name {
+    width: 40% !important;
+    display: inline-block;
+}
+
+#form-email {
+    width: 96% !important;
+}
+
+#form-text {
+    height: 74%;
+    width: 100%;
+    resize: none;
+}
+
+#form-submit{
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    width: 30%;
+    margin: 10px auto;
+}
