@@ -1,0 +1,51 @@
+.dashboard {
+    padding: 40px;
+}
+
+h1 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.aboutSite{
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.details{
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.customerMessages{
+    align-items: center;
+}
+
+.customerMessages > button , .editMenu > button {
+    padding: 10px;
+    border: none;
+    background-color: #007bffde;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.customerMessages > button:hover , .editMenu > button:hover {
+    background-color: #006de1;
+}
+
+.editMenu{
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editMenu > button {
+    width: 35%;
+    height: 60px;
+    font-size: 1.2rem;
+}
