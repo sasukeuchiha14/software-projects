@@ -94,5 +94,43 @@ app.get('/api/menu/:week', async (req, res) => {
   }
 });
 
+app.post('/api/edit_menu', async (req, res) => {
+  const { week, day, time, newItem } = req.body;
+  let weekModel;
+
+  switch (week) {
+    case 'week1':
+      weekModel = week1;
+      break;
+    case 'week2':
+      weekModel = week2;
+      break;
+    case 'week3':
+      weekModel = week3;
+      break;
+    case 'week4':
+      weekModel = week4;
+      break;
+    default:
+      return res.status(400).json({ message: 'Invalid week parameter' });
+  }
+
+  try {
+    const updatedMenu = await weekModel.findOneAndUpdate(
+      { day, time },
+      { content: newItem },
+      { new: true }
+    );
+
+    if (updatedMenu) {
+      res.json(updatedMenu);
+    } else {
+      res.status(404).json({ message: 'Menu not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

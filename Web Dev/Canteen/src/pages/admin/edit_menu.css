@@ -1,0 +1,40 @@
+.back {
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.back > button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.4rem;
+}
+
+.edit-menu {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+}
+
+.edit-menu div{
+    display: flex;
+    margin: 20px;
+}
+
+.edit-menu div *{
+    height: 40px;
+}
+
+.edit-menu  div :nth-child(1) {
+    width: 20%;
+    height: 100%;
+    margin: 10px;
+}
+.edit-menu  div :nth-child(2) {
+    width: 80%;
+    margin: 0px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+}

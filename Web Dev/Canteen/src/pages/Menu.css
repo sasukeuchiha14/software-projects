@@ -26,6 +26,7 @@ tr td:first-child {
 
 #week {
     font-size: 20px;
+    text-align: center;
     border: none;
     background-color: transparent;
     cursor: pointer;

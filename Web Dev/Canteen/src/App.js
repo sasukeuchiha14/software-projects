@@ -6,7 +6,7 @@ import Contact from './pages/Contact';
 import './App.css';
 import AdminLogin from './pages/admin/login';
 import Dashboard from './pages/admin/dashboard';
-
+import Edit_menu from './pages/admin/edit_menu';
 import Responses from './pages/admin/responses';
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
-
+          <Route path="/admin/edit-menu" element={<Edit_menu />} />
           <Route path="/admin/responses" element={<Responses />} />
         </Routes>
       </main>
