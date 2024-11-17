@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import './edit_menu.css'
 
-const Edit_menu = () => {
+const EditMenu = () => {
     const [week, setWeek] = useState('week1');
     const [day, setDay] = useState('mon');
     const [time, setTime] = useState('breakfast');
@@ -102,4 +102,4 @@ const Edit_menu = () => {
     )
 }
 
-export default Edit_menu;
+export default EditMenu;
