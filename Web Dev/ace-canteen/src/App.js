@@ -2,12 +2,14 @@ import React from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';  // UseNavigate to control navigation
 import Home from './pages/Home';
 import Menu from './pages/Menu';
+import AboutUs from './pages/about_us';
 import Contact from './pages/Contact';
 import './App.css';
 import AdminLogin from './pages/admin/login';
 import Dashboard from './pages/admin/dashboard';
 import EditMenu from './pages/admin/edit_menu';
 import Responses from './pages/admin/responses';
+// import logo from './assets/logo.png';
 
 function App() {
   const navigate = useNavigate();  // Hook to handle navigation
@@ -16,7 +18,7 @@ function App() {
     <>
       <header>
         <nav>
-          {/* Add onClick handlers to navigate */}
+          {/* <img src={logo} alt="Ace Canteen" onClick={() => navigate('/home')} /> */}
           <button onClick={() => navigate('/home')}>Home</button>
           <button onClick={() => navigate('/menu')}>Menu</button>
           <button onClick={() => navigate('/about')}>About Us</button>
@@ -26,9 +28,10 @@ function App() {
 
       <main>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
-          <Route path="/about" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />

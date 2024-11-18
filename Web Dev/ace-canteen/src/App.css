@@ -22,6 +22,12 @@ nav {
     padding: 6px;
 }
 
+nav img{
+    height: 1.5rem;
+    width: 1.5rem;
+    cursor: pointer;
+}
+
 nav button{
     font-size: 1.2rem;
     font-weight: 600;
