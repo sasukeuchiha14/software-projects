@@ -1,8 +1,19 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './edit_menu.css'
+import { counterContext } from '../../context/context';
 
 const EditMenu = () => {
+    const value = useContext(counterContext);
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (value.isLoggedIn === 0) {
+            alert('You need to login first');
+            navigate('/admin/login');
+        }
+    }, [value.isLoggedIn, navigate]);
+
     const [week, setWeek] = useState('week1');
     const [day, setDay] = useState('mon');
     const [time, setTime] = useState('breakfast');
@@ -51,7 +62,7 @@ const EditMenu = () => {
     return (
         <>
             <div className='back'>
-                <button onClick={() => window.location.href = '/admin/dashboard'}>◀️</button>
+                <button onClick={() => navigate('/admin/dashboard')}>◀️</button>
             </div>
             <form className='edit-menu' onSubmit={handleEditSubmit}>
                 <div>

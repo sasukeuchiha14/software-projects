@@ -18,7 +18,7 @@ marquee span:hover{
 .carousel {
     position: relative;
     width: 100%; /* Full width */
-    max-width: 700px; /* Maximum width */
+    max-width: 900px; /* Maximum width */
     margin: auto; /* Center the carousel */
     overflow: hidden;
 }
@@ -30,10 +30,11 @@ marquee span:hover{
 .carousel-images {
     display: flex;
     transition: transform 0.5s ease;
+    justify-content: center;
 }
   
 .carousel-images img {
-    width: 100%;
+    width: 700px;
     height: auto;
     display: none; /* Hide all images by default */
     height: 370px;
@@ -47,7 +48,7 @@ marquee span:hover{
   
 .carousel-button {
     position: absolute;
-    top: 29.5%;
+    top: 27%;
     font-size: 3rem;
     /* background-color: rgba(255, 255, 255, 0.7); */
     background-color: transparent;
@@ -67,14 +68,14 @@ marquee span:hover{
 }
 
 .carousel-button:hover {
-    top: 28%;
+    top: 25.5%;
 }
 
 .prev {
-    left: 10px;
+    left: 25px;
 }
 .next {
-    right: 10px;
+    right: 25px;
 }
 .prev:hover, .next:hover {
     font-size: 4rem;

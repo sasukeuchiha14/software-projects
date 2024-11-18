@@ -1,7 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './responses.css';
+import { counterContext } from '../../context/context';
 
 const Responses = () => {
+    const value = useContext(counterContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (value.isLoggedIn === 0) {
+            alert('You need to login first');
+            navigate('/admin/login');
+        }
+    }, [value.isLoggedIn, navigate]);
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -32,7 +44,7 @@ const Responses = () => {
     return (
         <>
             <div className='back'>
-                <button onClick={() => window.location.href = '/admin/dashboard'}>◀️</button>
+            <button onClick={() => navigate('/admin/dashboard')}>◀️</button>
             </div>
             <div className='responses'>
                 <h1>Responses</h1>

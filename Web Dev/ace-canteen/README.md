@@ -40,7 +40,8 @@ Ace Canteen is a web application designed to provide a seamless and engaging onl
 
 3. Start the development server:
     ```bash
-    npm run dev
+    npm run server
+    npm start
     ```
 
 4. Ensure MongoDB is running and connected.

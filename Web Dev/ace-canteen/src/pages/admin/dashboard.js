@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './dashboard.css';
+import { counterContext } from '../../context/context';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+    const value = useContext(counterContext);
+
+    React.useEffect(() => {
+        if (value.isLoggedIn === 0) {
+            alert('You need to login first');
+            navigate('/admin/login');
+        }
+    }, [value.isLoggedIn, navigate]);
+
     return (
         <div className='dashboard'>
             <h1>Admin Dashboard</h1>
@@ -20,12 +32,18 @@ const Dashboard = () => {
                 </div>
                 <div className='details customerMessages'>
                     <h2>Customer Messages</h2>
-                    <button onClick={() => window.location.href = '/admin/responses'}>View Messages</button>
+                    <button onClick={() => {
+                        value.setIsLoggedIn(1);
+                        navigate('/admin/responses');
+                    }}>View Messages</button>
                 </div>
             </div>
             <div className='editMenu'>
                 {/* <h2>Edit Menu</h2> */}
-                <button onClick={() => window.location.href = '/admin/edit-menu'}>✏️&nbsp;Edit Menu&nbsp;✏️</button>
+                <button onClick={() => {
+                    value.setIsLoggedIn(1);
+                    navigate('/admin/edit-menu');
+                }}>✏️&nbsp;Edit Menu&nbsp;✏️</button>
             </div>
         </div>
     );

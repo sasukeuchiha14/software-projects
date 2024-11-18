@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';  // UseNavigate to control navigation
+import { counterContext } from './context/context';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import AboutUs from './pages/about_us';
@@ -10,12 +11,14 @@ import Dashboard from './pages/admin/dashboard';
 import EditMenu from './pages/admin/edit_menu';
 import Responses from './pages/admin/responses';
 // import logo from './assets/logo.png';
+// import ace from './assets/ace.png';
 
 function App() {
   const navigate = useNavigate();  // Hook to handle navigation
+  const [isLoggedIn, setIsLoggedIn] = useState(0);
 
   return (
-    <>
+    <counterContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <header>
         <nav>
           {/* <img src={logo} alt="Ace Canteen" onClick={() => navigate('/home')} /> */}
@@ -42,13 +45,18 @@ function App() {
       
       <footer>
         <p>&copy; 2024 Ace Canteen</p>
-        {window.location.pathname === '/admin/dashboard' || window.location.pathname === '/admin/edit_menu' || window.location.pathname === '/admin/responses' ? (
-          <button onClick={() => navigate(window.location.pathname)}>Admin Panel</button>
+        {isLoggedIn === 1 ? (
+          <button onClick={ () => {
+            setIsLoggedIn(0)
+            if (['/admin/dashboard', '/admin/edit-menu', '/admin/responses'].includes(window.location.pathname)) {
+              navigate('/admin/login')
+            }
+          }}>Log-out Admin</button>
         ) : (
           <button onClick={() => navigate('/admin/login')}>Admin Login</button>
         )}
       </footer>
-    </>
+    </counterContext.Provider>
   );
 }
 
