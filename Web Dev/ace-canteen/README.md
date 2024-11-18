@@ -79,4 +79,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any inquiries, please contact us at [hgarg7123@gmail.com](mailto:hgarg7123+github@gmail.com).
+For any inquiries, please contact us at [contact@acecanteen.com](mailto:hgarg7123+github@gmail.com).
