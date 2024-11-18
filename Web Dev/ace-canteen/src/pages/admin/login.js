@@ -9,7 +9,7 @@ const AdminLogin = () => {
     const value = useContext(counterContext);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect((value) => {
         value.setIsLoggedIn(0);
     }, []);
 
