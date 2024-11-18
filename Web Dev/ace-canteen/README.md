@@ -69,9 +69,9 @@ Ace Canteen is a web application designed to provide a seamless and engaging onl
 ├── README.md
 ```
 
-## Contributing
+<!-- ## Contributing
 
-Contributions are Welcome! Please fork the repository and create a pull request with your changes.
+Contributions are Welcome! Please fork the repository and create a pull request with your changes. -->
 
 <!-- ## License
 
