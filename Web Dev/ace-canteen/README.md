@@ -55,7 +55,7 @@ Ace Canteen is a web application designed to provide a seamless and engaging onl
 ## Folder Structure
 
 ```
-/E:/Projects/Web Dev/Canteen/
+/Projects/Web Dev/ace-canteen/
 ├── public/
 ├── src/
 │   ├── assets/
