@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/canteen', {
   useUnifiedTopology: true,
 })
 .then(() => console.log('MongoDB connected'))
-.catch(err => console.log(err));
+.catch(err => console.error('MongoDB connection error:', err));
 
 // Schema and Model for Contacts
 const mailSchema = new mongoose.Schema({ regarding: String, name: String, email: String, message: String });
@@ -33,31 +33,29 @@ const week4 = mongoose.model('week4', menuSchema);
 app.post('/api/mail', async (req, res) => {
   const newMail = new Mail({
     regarding: req.body.regarding,
-    name: req.body.firstName + ' ' + req.body.lastName,
+    name: `${req.body.firstName} ${req.body.lastName}`,
     email: req.body.email,
     message: req.body.message
   });
   try {
     const savedMail = await newMail.save();
-    res.json(savedMail);
+    res.status(201).json(savedMail);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Fetch data from Contacts
 app.get('/api/mail', async (req, res) => {
   try {
     const mail = await Mail.find();
-    res.json(mail);
+    res.status(200).json(mail);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Fetch data from Menu for Week 1 to Week 4 or for a specific day and time
 app.get('/api/menu/:week', async (req, res) => {
-  const { week } = req.params;
+  const week = req.params.week;
   const { time, day } = req.query;
   let weekModel;
 
@@ -75,7 +73,8 @@ app.get('/api/menu/:week', async (req, res) => {
       weekModel = week4;
       break;
     default:
-      return res.status(400).json({ message: 'Invalid week parameter' });
+      res.status(400).json({ message: 'Invalid week parameter' });
+      return;
   }
 
   try {
@@ -85,7 +84,7 @@ app.get('/api/menu/:week', async (req, res) => {
 
     const menu = day || time ? await weekModel.findOne(query) : await weekModel.find();
     if (menu) {
-      res.json(menu);
+      res.status(200).json(menu);
     } else {
       res.status(404).json({ message: 'Menu not found' });
     }
@@ -112,7 +111,8 @@ app.post('/api/edit_menu', async (req, res) => {
       weekModel = week4;
       break;
     default:
-      return res.status(400).json({ message: 'Invalid week parameter' });
+      res.status(400).json({ message: 'Invalid week parameter' });
+      return;
   }
 
   try {
@@ -123,7 +123,7 @@ app.post('/api/edit_menu', async (req, res) => {
     );
 
     if (updatedMenu) {
-      res.json(updatedMenu);
+      res.status(200).json(updatedMenu);
     } else {
       res.status(404).json({ message: 'Menu not found' });
     }
@@ -132,5 +132,6 @@ app.post('/api/edit_menu', async (req, res) => {
   }
 });
 
-// Start server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
