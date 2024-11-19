@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import { counterContext } from '../../context/context';
@@ -9,9 +9,9 @@ const AdminLogin = () => {
     const value = useContext(counterContext);
     const navigate = useNavigate();
 
-    useEffect((value) => {
+    React.useEffect(() => {
         value.setIsLoggedIn(0);
-    }, []);
+    }, [value]);
 
     const handleLogin = (e) => {
         e.preventDefault();

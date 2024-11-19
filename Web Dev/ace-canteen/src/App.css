@@ -56,7 +56,8 @@ footer {
     color: white;
     background-color: #333;
     padding: 20px;
-    width: calc(100%- 40px);
+    height: 29px;
+    width: calc(100vw- 40px);
     display: flex;
     justify-content: space-between;
     position: sticky;
@@ -67,12 +68,13 @@ footer button{
     font-size: 1rem;
     font-weight: 600;
     color: white;
-    height: 1.1rem;
+    height: 1.2rem;
+    width: 150px;
     text-decoration: none;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
 }
 
 footer button:hover{

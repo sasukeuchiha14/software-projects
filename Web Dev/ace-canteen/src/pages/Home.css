@@ -32,18 +32,42 @@ marquee span:hover{
     transition: transform 0.5s ease;
     justify-content: center;
 }
-  
+
 .carousel-images img {
     width: 700px;
-    height: auto;
-    display: none; /* Hide all images by default */
     height: 370px;
     object-fit: cover;
-    transition: opacity 0.5s ease-in-out;
+    display: none; /* Hide all images by default */
+    animation: fadeOut 1s;
 }
-  
+
 .carousel-images img.active {
     display: block; /* Show only the active image */
+    animation: fadeIn 1s;
+}
+
+.carousel-images img::backdrop{
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 700px;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        display: block;
+        width: 700px;
+    }
+    to {
+        display: none;
+        width: 0px;
+    }
 }
   
 .carousel-button {

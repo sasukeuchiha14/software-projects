@@ -46,12 +46,15 @@ function App() {
       <footer>
         <p>&copy; 2024 Ace Canteen</p>
         {isLoggedIn === 1 ? (
-          <button onClick={ () => {
-            setIsLoggedIn(0)
-            if (['/admin/dashboard', '/admin/edit-menu', '/admin/responses'].includes(window.location.pathname)) {
-              navigate('/admin/login')
-            }
-          }}>Log-out Admin</button>
+          <span>
+            <button onClick={ () => {
+              setIsLoggedIn(0)
+              if (['/admin/dashboard', '/admin/edit-menu', '/admin/responses'].includes(window.location.pathname)) {
+                navigate('/admin/login')
+              }
+            }}>LogOut Admin</button>
+            <button onClick={() => navigate('/admin/dashboard')}>Admin Panel</button>
+          </span>
         ) : (
           <button onClick={() => navigate('/admin/login')}>Admin Login</button>
         )}
