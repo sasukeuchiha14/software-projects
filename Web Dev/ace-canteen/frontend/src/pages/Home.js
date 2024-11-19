@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import canteen1 from '../assets/canteen1.jpg';
-import canteen2 from '../assets//canteen2.jpg';
-import canteen3 from '../assets//canteen3.jpg';
+import canteen2 from '../assets/canteen2.jpg';
+import canteen3 from '../assets/canteen3.jpg';
 
 const images = [
   { src: canteen1, alt: 'Canteen 1' },
