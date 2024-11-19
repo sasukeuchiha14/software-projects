@@ -40,6 +40,9 @@ time.sleep(5)
 
 # Do the Searches
 for i in range(35):
+    
+    # Print the ongoing search number
+    print("Ongoing Search Number: ",i+1)
 
     # Exit the loop if the user presses the escape key
     if exit_flag:
