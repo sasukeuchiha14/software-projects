@@ -29,19 +29,30 @@ Ace Canteen is a web application designed to provide a seamless and engaging onl
     git clone --no-checkout https://github.com/sasukeuchiha14/Projects.git
     cd Projects
     git sparse-checkout init --cone
-    git sparse-checkout set "Web Dev/ace-canteen"
+    git sparse-checkout set "Web Dev/Ace Canteen"
     git checkout main
     ```
 
 2. Install dependencies:
     ```bash
+    cd frontend
+    npm install
+    cd ..
+    cd backend
     npm install
     ```
 
 3. Start the development server:
+
+    Terminal 1:
     ```bash
-    npm run server
+    cd frontend
     npm start
+    ```
+    Terminal 2:
+    ```bash
+    cd backend
+    node server.js
     ```
 
 4. Ensure MongoDB is running and connected.
@@ -56,17 +67,32 @@ Ace Canteen is a web application designed to provide a seamless and engaging onl
 ## Folder Structure
 
 ```
-/Projects/Web Dev/ace-canteen/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── pages/
-│   ├── App.js
-│   ├── index.js
-│   ├── ...
-├── server.js
-├── package.json
+/ace-canteen/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── context/
+│   │   │   ├── context.js
+│   │   ├── pages/
+│   │   │   ├── admin/
+│   │   │   │   ├── login.js
+│   │   │   │   ├── dashboard.js
+│   │   │   │   ├── responses.js
+│   │   │   │   ├── edit-menu.js
+│   │   │   │   ├── ...
+│   │   │   ├── Home.js
+│   │   │   ├── Menu.js
+│   │   │   ├── about_us.js
+│   │   │   ├── Contact.js
+│   │   │   ├── ...
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   ├── ...
+│   ├── package.json
+├── backend/
+│   ├── server.js
+│   ├── package.json
 ├── README.md
 ```
 
