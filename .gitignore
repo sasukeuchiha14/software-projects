@@ -63,6 +63,9 @@ yarn-error.log*
 *.orig
 *.save
 
+# Personal files
+toggle-theme.txt
+
 # OS generated files
 Thumbs.db
 Desktop.ini
