@@ -21,8 +21,11 @@ This To-do List application is a simple and efficient tool to manage your daily 
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/sasukeuchiha14/Projects.git
-    cd Projects/Web Dev/To-do List
+    git clone --no-checkout https://github.com/sasukeuchiha14/Projects.git
+    cd Projects
+    git sparse-checkout init --cone
+    git sparse-checkout set "Web Dev/To-do List"
+    git checkout main
     ```
 
 2. Install dependencies:
@@ -55,7 +58,3 @@ This To-do List application is a simple and efficient tool to manage your daily 
 ## Live Preview
 
 Experience the To-do List application in action by visiting the [live demo](https://hardik-todo.netlify.app/).
-
-## Contact
-
-For any inquiries, please contact me at [hgarg7123@gmail.com](mailto:hgarg7123+github@gmail.com).
