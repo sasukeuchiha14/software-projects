@@ -3,10 +3,21 @@ import './Contact.css';
 
 const ContactForm = () => {
   // State for form fields
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: ''
+  });
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -15,10 +26,7 @@ const ContactForm = () => {
     // Create the body object
     const body = {
       regarding: document.getElementById('form-regarding').value,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      message: message,
+      ...formData
     };
 
     try {
@@ -35,17 +43,17 @@ const ContactForm = () => {
         const data = await response.json();
         console.log('Success:', data); // Log the response data
         alert('Message sent successfully!'); // Show success alert
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setMessage('');
-      }
-      else {
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          message: ''
+        });
+      } else {
         console.error('Error:', response.statusText);
         alert('Failed to send message. Please try again.'); // Show error alert
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error:', error);
       alert('An error occurred. Please try again.'); // Show error alert
     }
@@ -63,15 +71,15 @@ const ContactForm = () => {
           </select>
           <h2>NAME</h2>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <input id="form-first-name" type="text" placeholder="First Name" required value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ width: '48%' }} />
-            <input id="form-last-name" type="text" placeholder="Last Name" required value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ width: '48%' }} />
+            <input id="form-first-name" type="text" placeholder="First Name" name="firstName" required value={formData.firstName} onChange={handleChange} style={{ width: '48%' }} />
+            <input id="form-last-name" type="text" placeholder="Last Name" name="lastName" required value={formData.lastName} onChange={handleChange} style={{ width: '48%' }} />
           </div>
           <h2>EMAIL</h2>
-          <input id="form-email" type="email" placeholder="example@example.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input id="form-email" type="email" placeholder="example@example.com" name="email" required value={formData.email} onChange={handleChange} />
         </div>
         <div style={{ width: '48%' }}>
           <h2>MESSAGE</h2>
-          <textarea id="form-text" placeholder="Description" required value={message} onChange={(e) => setMessage(e.target.value)} style={{ width: '100%' }}></textarea>
+          <textarea id="form-text" placeholder="Description" name="message" required value={formData.message} onChange={handleChange} style={{ width: '100%' }}></textarea>
         </div>
       </div>
       <button id="form-submit" type="submit">Send</button>
