@@ -96,14 +96,14 @@ Ace Canteen is a web application designed to provide a seamless and engaging onl
 ├── README.md
 ```
 
-<!-- ## Contributing
+## License
 
-Contributions are Welcome! Please fork the repository and create a pull request with your changes. -->
-
-<!-- ## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details. -->
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
 
 For any inquiries, please contact us at [contact@acecanteen.com](mailto:hgarg7123+github@gmail.com).
+
+## Live Preview
+
+Experience the To-do List application in action by visiting the [live demo](https://ace-canteen.hardikgarg.me/).

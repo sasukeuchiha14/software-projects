@@ -57,4 +57,4 @@ This To-do List application is a simple and efficient tool to manage your daily 
 
 ## Live Preview
 
-Experience the To-do List application in action by visiting the [live demo](https://hardik-todo.netlify.app/).
+Experience the To-do List application in action by visiting the [live demo](https://todo.hardikgarg.me/).

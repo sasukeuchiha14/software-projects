@@ -53,3 +53,7 @@ This project is a clone of the Netflix India landing page. It is built using HTM
 ├── style.css
 ├── README.md
 ```
+
+## Live Preview
+
+Experience the To-do List application in action by visiting the [live demo](https://netflix.hardikgarg.me/).
