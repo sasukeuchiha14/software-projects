@@ -106,4 +106,4 @@ For any inquiries, please contact us at [contact@acecanteen.com](mailto:hgarg712
 
 ## Live Preview
 
-Experience the To-do List application in action by visiting the [live demo](https://ace-canteen.hardikgarg.me/).
+Experience the Ace Canteen web application in action by visiting the [live demo](https://ace-canteen.hardikgarg.me/).
