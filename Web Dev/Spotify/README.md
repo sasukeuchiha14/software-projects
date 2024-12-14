@@ -38,6 +38,14 @@ This Spotify Clone is a web application that replicates the core features of the
 ├── assets/
 │   ├── images/
 ├── songs/
+|   ├── playlist-1/
+|   |   ├── song-1.mp3
+|   |   ├── song-2.mp3
+|   |   ├── song-3.mp3
+|   |   ├── cover.jpg
+|   |   ├── info.json
+|   ├── playlist-2/
+|   ├── playlist-3/
 ├── css/
 │   ├── style.css
 │   ├── utility.css
