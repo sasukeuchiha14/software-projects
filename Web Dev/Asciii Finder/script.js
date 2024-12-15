@@ -17,6 +17,8 @@ function detectDevice() {
     }
     else {
         console.log("You're using a laptop or PC.");
+
+        inputField.disabled = true;
         
         window.addEventListener('keydown', function(e) {
             inputField.placeholder = `${e.key} : ${e.key.charCodeAt(0)}`;
