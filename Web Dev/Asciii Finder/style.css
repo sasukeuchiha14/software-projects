@@ -5,8 +5,11 @@
     padding: 0;
     font-family: 'Martel Sans', sans-serif;
     font-size: 40px;
-    color: white;
-    background-color: black;
+    transition: all 2s ease-in-out;
+}
+
+body {
+    background: radial-gradient(circle, rgba(106,106,106,1) 0%, rgb(151, 151, 151) 45%, rgba(256,256,256,1) 100%);
 }
 
 input {
@@ -18,9 +21,19 @@ input {
     text-align: center;
     cursor: default;
     caret-color: transparent;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+body.loaded input {
+    opacity: 1;
 }
 
 input::placeholder {
+    color: black;
+    /* color: white; */
+    transition: color 2s ease-in-out 1s;
+}
+body.loaded input::placeholder {
     color: white;
 }
 

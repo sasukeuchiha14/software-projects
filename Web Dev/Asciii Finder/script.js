@@ -6,7 +6,7 @@ function detectDevice() {
     if (/mobile|android|iphone|ipad|tablet/.test(userAgent)) {
         console.log("You're using a mobile or tablet.");
         
-        inputField.addEventListener('input', function(e) {
+        inputField.addEventListener('input', function() {
             setInterval(() => {}, 100);
             const currentValue = inputField.value[inputField.value.length - 1];
             inputField.placeholder = `${currentValue} : ${currentValue.charCodeAt(0)}`;
@@ -25,7 +25,15 @@ function detectDevice() {
             // this.document.getElementsByTagName('input')[0].value = '';
         });
     }
+
 }
+
 
 // Run on page load
 window.onload = detectDevice;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Trigger reflow to ensure transition works
+    inputField.offsetHeight;
+    document.body.classList.add('loaded');
+});
