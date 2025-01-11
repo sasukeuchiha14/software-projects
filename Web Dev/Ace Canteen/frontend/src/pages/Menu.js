@@ -14,15 +14,11 @@ class Home extends Component {
 
   addTime = async (week, name, time) => {
     const tr = document.createElement('tr');
+    const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    const content = await Promise.all(days.map(day => this.getContent(week, time, day)));
     tr.innerHTML = `
       <td>${name}</td>
-      <td>${await this.getContent(week, time, 'mon')}</td>
-      <td>${await this.getContent(week, time, 'tue')}</td>
-      <td>${await this.getContent(week, time, 'wed')}</td>
-      <td>${await this.getContent(week, time, 'thu')}</td>
-      <td>${await this.getContent(week, time, 'fri')}</td>
-      <td>${await this.getContent(week, time, 'sat')}</td>
-      <td>${await this.getContent(week, time, 'sun')}</td>
+      ${content.map(item => `<td>${item}</td>`).join('')}
     `;
     
     document.getElementsByTagName('tbody')[0].appendChild(tr);
