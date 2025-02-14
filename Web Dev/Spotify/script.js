@@ -19,7 +19,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`/${folder}/`)
+    let a = await fetch(`./${folder}/`);
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -28,14 +28,21 @@ async function getSongs(folder) {
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
         if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split(`/${folder}/`)[1])
+            let parts = element.href.split(`/${folder}/`);
+            if (parts.length > 1) {
+                songs.push(parts[1])
+            }
         }
     }
 
     // Show all the songs in the playlist
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
     songUL.innerHTML = ""
-    for (const song of songs) {
+
+    songs = songs.filter(song => song); // Filter out empty or undefined song values
+
+    for (let i = 0; i < songs.length; i++) {
+        const song = songs[i];
         songUL.innerHTML = songUL.innerHTML + `<li><img class="invert" width="34" src="assets/images/music.svg" alt="">
                             <div class="info">
                                 <div> ${song.replaceAll("%20", " ")}</div>
@@ -58,7 +65,7 @@ async function getSongs(folder) {
 }
 
 const playMusic = (track, pause = false) => {
-    currentSong.src = `/${currFolder}/` + track
+    currentSong.src = `${currFolder}/` + track
     if (!pause) {
         currentSong.play()
         play.src = "assets/images/pause.svg"
@@ -69,7 +76,7 @@ const playMusic = (track, pause = false) => {
 
 async function displayAlbums() {
     console.log("displaying albums")
-    let a = await fetch(`/songs/`)
+    let a = await fetch(`./songs/`);
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -81,7 +88,7 @@ async function displayAlbums() {
         if (e.href.includes("/songs") && !e.href.includes(".htaccess")) {
             let folder = e.href.split("/").slice(-2)[0]
             // Get the metadata of the folder
-            let a = await fetch(`/songs/${folder}/info.json`)
+            let a = await fetch(`./songs/${folder}/info.json`);
             let response = await a.json(); 
             cardContainer.innerHTML = cardContainer.innerHTML + ` <div data-folder="${folder}" class="card">
                 <div class="play">
@@ -91,7 +98,7 @@ async function displayAlbums() {
                     </svg>
                 </div>
 
-                <img src="/songs/${folder}/cover.jpg" alt="">
+                <img src="./songs/${folder}/cover.jpg" alt="">
                 <h2>${response.title}</h2>
                 <p>${response.description}</p>
             </div>`
@@ -104,15 +111,23 @@ async function displayAlbums() {
             console.log("Fetching Songs")
             songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
             // currentTarget is used instead of target becz target will target the child element on which the click event is fired not the parent element
-            playMusic(songs[0])
+            if (songs.length > 0) {
+                playMusic(songs[0])
+            } else {
+                console.error("No songs found in the folder");
+            }
         })
     })
 }
 
 async function main() {
     // Get the list of all the songs
-    await getSongs("songs/Aashiqui")
-    playMusic(songs[0], true)
+    await getSongs("songs/Aashiqui%202");
+    if (songs && songs.length > 0) {
+        playMusic(songs[0], true)
+    } else {
+        console.warn("No songs found in the folder. Playing default song.");
+    }
 
     // Display all the albums on the page
     await displayAlbums()
