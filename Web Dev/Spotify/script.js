@@ -28,6 +28,18 @@ async function displayAlbums() {
         let metadataResponse = await fetch(`https://${SERVER_IP}:${PORT}/api/songs/${playlist}`);
         let metadata = await metadataResponse.json();
 
+        let description = 'No metadata found';
+
+        if (metadata.metadata) {
+            try {
+                const metaResponse = await fetch(metadata.metadata);
+                const metaDataJson = await metaResponse.json();
+                description = metaDataJson.description || description;
+            } catch (error) {
+                console.error("Error fetching metadata:", error);
+            }
+        }
+
         cardContainer.innerHTML += `
             <div data-folder="${playlist}" class="card">
                 <div class="play">
@@ -37,7 +49,7 @@ async function displayAlbums() {
                 </div>
                 <img src="${metadata.cover || 'assets/images/music.svg'}" alt="">
                 <h2>${playlist.replaceAll("%20", " ")}</h2>
-                <p>${metadata.metadata ? 'Playlist info available' : 'No metadata found'}</p>
+                <p>${description}</p>
             </div>`;
     }
 
