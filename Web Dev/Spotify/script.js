@@ -1,5 +1,5 @@
-const SERVER_IP = "123.123.123.123"; // Hidden for Github Repo
-const PORT = 0; // Hidden for Github Repo
+const SERVER_IP = "www.example.com"; // Change this to your server IP
+const PORT = 0; // Change this to your server port
 
 let currentSong = new Audio();
 currentSong.volume = 1;
@@ -18,14 +18,14 @@ function secondsToMinutesSeconds(seconds) {
 // Fetch and display playlists
 async function displayAlbums() {
     console.log("Fetching playlists...");
-    let response = await fetch(`http://${SERVER_IP}:${PORT}/api/playlists`);
+    let response = await fetch(`https://${SERVER_IP}:${PORT}/api/playlists`);
     let playlists = await response.json();
     let cardContainer = document.querySelector(".cardContainer");
 
     cardContainer.innerHTML = "";
 
     for (let playlist of playlists) {
-        let metadataResponse = await fetch(`http://${SERVER_IP}:${PORT}/api/songs/${playlist}`);
+        let metadataResponse = await fetch(`https://${SERVER_IP}:${PORT}/api/songs/${playlist}`);
         let metadata = await metadataResponse.json();
 
         cardContainer.innerHTML += `
@@ -55,7 +55,7 @@ async function displayAlbums() {
 // Fetch and display songs from selected playlist
 async function getSongs(folder) {
     currFolder = folder;
-    let response = await fetch(`http://${SERVER_IP}:${PORT}/api/songs/${folder}`);
+    let response = await fetch(`https://${SERVER_IP}:${PORT}/api/songs/${folder}`);
     let data = await response.json();
 
     songs = data.songs;
