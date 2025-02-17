@@ -4,7 +4,7 @@ import './Menu.css';
 class Home extends Component {
   getContent = async (week, time, day) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/menu/${week}?time=${time}&day=${day}`);
+      const response = await fetch(`http://localhost:5000/api/menu/${week}?time=${time}&day=${day}`); // Fetch data from the API
       const menu = await response.json();
       return menu.content;
     } catch (error) {

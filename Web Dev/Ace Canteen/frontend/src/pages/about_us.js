@@ -1,8 +1,6 @@
 import React from "react";
 import "./about_us.css";
-import hardik from "../assets/hardik.jpg";
-import vikhyath from "../assets/vik.jpg";
-import gagan from "../assets/gagan.jpg";
+import hardik from "../assets/hardik2.jpg";
 
 function Profile({ imgSrc, altText, name, position, description }) {
     return (
@@ -44,17 +42,17 @@ function AboutUs() {
                         description=""
                     />
                     <Profile
-                        imgSrc={vikhyath}
-                        altText="Vikhayth"
-                        name="Vikhyath"
+                        imgSrc={hardik}
+                        altText="Hardik"
+                        name="Hardik Garg"
                         position="Creative Director"
                         description=""
                     />
                     <Profile
-                        imgSrc={gagan}
-                        altText="Gagan"
-                        name="Gagan Reddy"
-                        position="Operations Manager"
+                        imgSrc={hardik}
+                        altText="Hardik"
+                        name="Hardik Garg"
+                        position="Manager"
                         description=""
                     />
                 </div>

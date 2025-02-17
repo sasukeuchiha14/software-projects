@@ -30,7 +30,7 @@ const ContactForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/mail', {
+      const response = await fetch('http://localhost:5000/api/mail', { // Fetch data from the API
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

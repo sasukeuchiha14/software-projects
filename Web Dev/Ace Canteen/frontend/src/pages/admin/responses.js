@@ -21,7 +21,7 @@ const Responses = () => {
     const fetchResponseData = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/mail');
+            const response = await fetch('http://localhost:5000/api/mail'); // Fetch data from the API
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

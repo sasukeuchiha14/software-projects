@@ -44,6 +44,10 @@ const AdminLogin = () => {
                 />
                 <button type="submit">Login</button>
             </form>
+            <div style={{ textAlign: 'center' }}>
+                <p>&#40; Username: admin &#41;</p>
+                <p>&#40; Password: password &#41;</p>
+            </div>
         </div>  
     );
 };
