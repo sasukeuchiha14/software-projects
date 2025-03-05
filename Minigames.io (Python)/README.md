@@ -27,7 +27,7 @@ pip install pygame
 ```
 3. Clone this repository:
 ```
-git clone https://github.com/sasukeuchiha14/software-projects.git
+git clone --no-checkout https://github.com/sasukeuchiha14/software-projects.git
 cd MiniGames.io (Python)
 git sparse-checkout init --cone
 git sparse-checkout set "Minigames.io (Python)"
