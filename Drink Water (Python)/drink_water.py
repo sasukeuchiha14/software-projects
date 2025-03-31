@@ -2,11 +2,15 @@ from plyer import notification
 from pygame import mixer
 import time
 import threading
+import os
+
+# Get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Play sound using pygame mixer for 5 seconds
 def play_sound():
     mixer.init()
-    mixer.music.load("e:/Projects/Python/Drink_water/water.mp3")
+    mixer.music.load(os.path.join(current_dir, "water.mp3"))
     mixer.music.play()
     time.sleep(5)
     mixer.music.stop()
@@ -16,7 +20,7 @@ def show_notification():
     notification.notify(
         title = "Drink Water Reminder",
         message = "Fact: Men should have about 2.6 litres (10 cups) of fluids a day.",
-        app_icon = "e:/Projects/Python/Drink_water/logo.ico",
+        app_icon = os.path.join(current_dir, "logo.ico"),
         timeout = 5
     )
 
